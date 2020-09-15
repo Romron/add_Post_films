@@ -9,12 +9,14 @@
 
 
 /* Запускаем функцию установки */
-register_activation_hook(__FILE__,'my_plugin_install');
+register_activation_hook(__FILE__,'add_Post_films_install');
 
 /* Запускаем функцию деактивации*/
-register_deactivation_hook( __FILE__, 'my_plugin_remove' );
-Функция установки плагина:
-function my_plugin_install() {
+register_deactivation_hook( __FILE__, 'add_Post_films_remove' );
+
+
+// Функция установки плагина:
+function add_Post_films_install() {
 
     global $wpdb;
 
@@ -22,14 +24,14 @@ function my_plugin_install() {
     $the_page_name = 'Имя страницы';
 
     // Меняем название в меню
-    delete_option("my_plugin_page_title");
-    add_option("my_plugin_page_title", $the_page_title, '', 'yes');
+    delete_option("add_Post_films_page_title");
+    add_option("add_Post_films_page_title", $the_page_title, '', 'yes');
     // имя страницы (slug)
-    delete_option("my_plugin_page_name");
-    add_option("my_plugin_page_name", $the_page_name, '', 'yes');
+    delete_option("add_Post_films_page_name");
+    add_option("add_Post_films_page_name", $the_page_name, '', 'yes');
     // ID
-    delete_option("my_plugin_page_id");
-    add_option("my_plugin_page_id", '0', '', 'yes');
+    delete_option("add_Post_films_page_id");
+    add_option("add_Post_films_page_id", '0', '', 'yes');
 
     $the_page = get_page_by_title( $the_page_title );
 
@@ -68,7 +70,7 @@ function my_plugin_install() {
 
 
 //Функция удаления плагина
-function my_plugin_remove() {
+function add_Post_films_remove() {
 
     global $wpdb;
 
