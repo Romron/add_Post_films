@@ -10,9 +10,9 @@ $file_name_addPF = __DIR__. '\json\result_DateAboutAllFilms  TEST 10 .json';
 
 $arr_posts_addPF = Json__addPF($file_name_addPF);
 
-echo('<pre>');
-print_r($arr_posts_addPF);
-echo('</pre>');
+// echo('<pre>');
+// print_r($arr_posts_addPF);
+// echo('</pre>');
 
 Insert_posts_addPF($arr_posts_addPF);
 
