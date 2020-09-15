@@ -15,4 +15,4 @@ $file_name_addPF = __DIR__. '\json\result_DateAboutAllFilms  TEST 10 .json';
 // translit($str_rus,$flag_change_of_registers=0);
 
 
-Create_taxonomy_addPF($file_name_addPF);
+Create_taxonomy_test_1($file_name_addPF);
