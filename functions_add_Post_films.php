@@ -86,9 +86,9 @@ function Create_taxonomy_addPF($file_name_addPF){
 					'Director',
 				];
 
-	echo('<pre>');		# for tests
-	print_r($arr_taxonomy);		# for tests
-	echo('</pre>');		# for tests	
+	// echo('<pre>');		# for tests
+	// print_r($arr_taxonomy);		# for tests
+	// echo('</pre>');		# for tests	
 
 		while ($n_arr_posts_addPF < $len_arr_posts_addPF) {
 			foreach ($arr_films_addPF[$n_arr_posts_addPF] as $key => $value) {
@@ -132,13 +132,14 @@ function Create_taxonomy_addPF($file_name_addPF){
 					'rest_base'             => null, // $taxonomy
 					// '_builtin'              => false,
 					//'update_count_callback' => '_update_post_term_count',
-				]
+				];
 
 
-				add_action( 'init', 'Create_taxonomy' );
-				Create_taxonomy($taxonomy_name,'post',$arr_args);
-
-				echo($key . ' => ' . $value . '<br>');
+				add_action( 'init', function($arr_args){
+										echo('Создаю котегорию 1');
+										return Create_taxonomy('$taxonomy_name','post',$arr_args);
+										});
+				// echo($key . ' => ' . $value . '<br>');
 				};
 		echo('<br>');
 		$n_arr_posts_addPF ++;
@@ -148,8 +149,7 @@ function Create_taxonomy_addPF($file_name_addPF){
 
 
 function Create_taxonomy($taxonomy_name,$object_type='post',$arr_args){
-
-	// список параметров: wp-kama.ru/function/get_taxonomy_labels
+	echo('Создаю котегорию 2');
 	register_taxonomy( $taxonomy_name, $object_type, $arr_args );
 
 	}
