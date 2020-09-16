@@ -13,10 +13,10 @@
 </head>
 <body>
 	<h1>addPostFilms DashBoard</h1>
-	<input type="button" value="START">
-	
-	<?echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>
 
+	<?# echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>
+	<input id="start_button" type="button" value="START">
+	<div id="result"></div>
 	<script src="<?echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>"></script>
 	
 </body>
