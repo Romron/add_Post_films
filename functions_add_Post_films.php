@@ -1,11 +1,26 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
+
+
+// Образно говоря:
+
+// add_action() - это аналог создания (определения) функции в PHP.
+// do_action() - это аналог использования (вызова) функции в PHP.
+// Вы в PHP тоже при создании функции, сразу ей переменные передаете, а какие?.. Или может, создаете функцию, определяете для неё какие переменные она может получить, а передаете переменные уже при вызове (использовании) функции?
+
+
+
+
+
+
+
 
 
 function Json__addPF($file_name_addPF){
 
 	$json_str = file_get_contents ($file_name_addPF);
 	$arr_films_addPF = json_decode($json_str, true);
-	echo '<pre>'; print_r($arr_films_addPF); echo '</pre>';
+	// echo '<pre>'; print_r($arr_films_addPF); echo '</pre>';
 	
 	
 
@@ -76,6 +91,8 @@ function Create_taxonomy_addPF($file_name_addPF){
 	// Создать массив категорий из указанных элементов массива $arr_films_addPF
 	// Создать категорию для каждого ээлемента полученного массива
 	
+
+
 	$arr_films_addPF = Json__addPF($file_name_addPF);
 	$len_arr_posts_addPF = count($arr_films_addPF);	
 	$n_arr_posts_addPF = 1;
@@ -138,14 +155,14 @@ function Create_taxonomy_addPF($file_name_addPF){
 					//'update_count_callback' => '_update_post_term_count',
 				];
 
+				Create_taxonomy('$taxonomy_name','post',$arr_args);
 
-				add_action( 'init', function($arr_args){
-										echo('Создаю котегорию 1');
-										return Create_taxonomy('$taxonomy_name','post',$arr_args);
-										});
+				// add_action( 'init', function(){
+				// 						echo('Создаю котегорию 1');
+				// 						return Create_taxonomy('$taxonomy_name','post',$arr_args);
+				// 						});
 				// echo($key . ' => ' . $value . '<br>');
 				};
-		echo('<br>');
 		$n_arr_posts_addPF ++;
 		};
 

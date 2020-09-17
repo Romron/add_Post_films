@@ -7,7 +7,8 @@
 
  */
 define( 'ADDPOSTFILMS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-require_once( ADDPOSTFILMS__PLUGIN_DIR . 'functions_add_Post_films.php' );
+
+// require_once( ADDPOSTFILMS__PLUGIN_DIR . 'functions_add_Post_films.php' );
 
 add_action("admin_menu", "admin_add_menu_add_Post_films");
 
