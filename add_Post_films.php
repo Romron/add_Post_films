@@ -17,6 +17,14 @@ function admin_add_menu_add_Post_films(){
                     plugin_dir_path( __FILE__ ).'addPostFilms_dashboard.php',  
                     ''
                 );
+   
+		wp_enqueue_script( 'script_add_Post_films.js',  plugin_dir_url( __FILE__ ) . 'script_add_Post_films.js');
+		wp_enqueue_style( 'style', plugin_dir_url( __FILE__ ) . 'style.css');
+
+
+
+
+
     };
 
 
