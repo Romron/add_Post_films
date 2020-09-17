@@ -31,11 +31,11 @@
 	<?# echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>
 	<input id="start_button" type="button" value="START">
 	<div id="result"></div>
-	<script src="<?echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>"></script>
 	
 
 
-
+<!-- для ajax: -->
+	<script src="<?echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>"></script>
 <!-- Для LiveReload: -->
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>

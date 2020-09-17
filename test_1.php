@@ -8,9 +8,6 @@ $file_name_addPF = 'json/result_DateAboutAllFilms  TEST 10 .json';
 // Json__addPF($file_name_addPF);
 
 
-
 Create_taxonomy_addPF($file_name_addPF);
-
-
 
 ?>

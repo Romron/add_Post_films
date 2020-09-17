@@ -16,14 +16,13 @@ require($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 
 
 
+
 function Json__addPF($file_name_addPF){
 
 	$json_str = file_get_contents ($file_name_addPF);
 	$arr_films_addPF = json_decode($json_str, true);
 	// echo '<pre>'; print_r($arr_films_addPF); echo '</pre>';
 	
-	
-
 	return $arr_films_addPF;
 	}
 
@@ -166,6 +165,9 @@ function Create_taxonomy_addPF($file_name_addPF){
 		$n_arr_posts_addPF ++;
 		};
 
+		echo(get_home_path());
+
+
 	}	
 
 
@@ -176,26 +178,6 @@ function Create_taxonomy($taxonomy_name,$object_type='post',$arr_args){
 	}
 
 
-// Добавить кнопку на страницу плагина
-// по нажатию на кнопку происходт событие
-// на это событие установить ХУК
-// при срабатывании ХУКА добавляеться категория
-
-
-
-function Create_taxonomy_test_1($file_name_addPF){
-
-	$arr_films_addPF = Json__addPF($file_name_addPF);
-	$len_arr_posts_addPF = count($arr_films_addPF);	
-	$n_arr_posts_addPF = 1;
-
-	add_action( 'init','Create_taxonomy' );
-}
-
-
-function Create_taxonomy_2(){
-	echo('*******************************************************************');
-}
 
 
 
