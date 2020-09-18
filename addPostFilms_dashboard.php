@@ -17,7 +17,11 @@
 	<div id="result"></div>
 	
 
-
+<script type="text/javascript">
+	$('#start_button').click(function() {
+	   location.reload();
+	});
+</script>
 
 
 

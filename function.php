@@ -97,11 +97,6 @@ function print_taxonomies(){
 //====================================================================================
 //====================================================================================
 
-function test_func(){
-
-	print_taxonomies();
-
-	}
 
 // add_action('init', 'test_type_post_register');
 // function test_type_post_register(){
@@ -136,14 +131,18 @@ function test_func(){
 // 	  register_post_type('kodex',$args);
 // }
 
+function test_func(){
 
+	print_taxonomies();
+
+	}
 
 add_action( 'init', 'test_taxonomy_register' );
 function test_taxonomy_register(){
     $labels = array(
-            'name'                       => 'Моя котегория',
+            'name'                       => 'Моя котегория 2',
             'singular_name'              => 'Категория',
-            'menu_name'                  => 'Моя котегория' ,
+            'menu_name'                  => 'Моя котегория 2' ,
             'all_items'                  => 'Все Моя котегория',
             'edit_item'                  => 'Редактировать категорию',
             'view_item'                  => 'Посмотреть категорию',
@@ -184,7 +183,7 @@ function test_taxonomy_register(){
         'sort'                  => true,
         '_builtin'              => false,
     	);
-	register_taxonomy('Моя котегория', array('post'), $args);
+	register_taxonomy('Моя котегория 2', array('post'), $args);
 
 	
 
