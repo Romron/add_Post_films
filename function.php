@@ -99,17 +99,9 @@ function print_taxonomies(){
 
 function test_func(){
 
-
 	print_taxonomies();
- 
-	die; // даём понять, что обработчик закончил выполнение
-
 
 	}
-
-
-
-
 
 // add_action('init', 'test_type_post_register');
 // function test_type_post_register(){

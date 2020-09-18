@@ -10,5 +10,5 @@ $file_name_addPF = 'json/result_DateAboutAllFilms  TEST 10 .json';
 test_func();
 
 
-
+die; // даём понять, что обработчик закончил выполнение
 ?>
