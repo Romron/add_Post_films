@@ -97,108 +97,10 @@ function print_taxonomies(){
 //====================================================================================
 //====================================================================================
 
-function Create_taxonomy_addPF($file_name_addPF){
-	// В этой ф-ции производятся все необходимые подготовительные операции для создания таксономий
-	// а непосредственно создание таксономий в ф-ции Create_taxonomy()
-	// Создать массив категорий из указанных элементов массива $arr_films_addPF
-	// Создать категорию для каждого ээлемента полученного массива
-
-	$arr_films_addPF = Json__addPF($file_name_addPF);
-	$len_arr_posts_addPF = count($arr_films_addPF);	
-	$n_arr_posts_addPF = 1;
-
-	$arr_taxonomy = [
-					'ProductionYear',
-					'Country',
-					'Genre',
-					'Actors',
-					'Producer',
-					'Scenario',
-					'Director',
-				];
-
-	// echo('<pre>');		# for tests
-	// print_r($arr_taxonomy);		# for tests
-	// echo('</pre>');		# for tests	
-
-		while ($n_arr_posts_addPF < $len_arr_posts_addPF) {
-			foreach ($arr_films_addPF[$n_arr_posts_addPF] as $key => $value) {
-				if (is_array($value)) {
-					
-
-					}
-
-				$arr_args = [
-					'label'                 => '', // определяется параметром $labels->name
-					'labels'                => [
-						'name'              => 'Genres',
-						'singular_name'     => 'Genre',
-						'search_items'      => 'Search Genres',
-						'all_items'         => 'All Genres',
-						'view_item '        => 'View Genre',
-						'parent_item'       => 'Parent Genre',
-						'parent_item_colon' => 'Parent Genre:',
-						'edit_item'         => 'Edit Genre',
-						'update_item'       => 'Update Genre',
-						'add_new_item'      => 'Add New Genre',
-						'new_item_name'     => 'New Genre Name',
-						'menu_name'         => 'Genre',
-					],
-					'description'           => '', // описание таксономии
-					'public'                => true,
-					// 'publicly_queryable'    => null, // равен аргументу public
-					// 'show_in_nav_menus'     => true, // равен аргументу public
-					// 'show_ui'               => true, // равен аргументу public
-					// 'show_in_menu'          => true, // равен аргументу show_ui
-					// 'show_tagcloud'         => true, // равен аргументу show_ui
-					// 'show_in_quick_edit'    => null, // равен аргументу show_ui
-					'hierarchical'          => false,
-
-					'rewrite'               => true,
-					//'query_var'             => $taxonomy, // название параметра запроса
-					'capabilities'          => array(),
-					'meta_box_cb'           => null, // html метабокса. callback: `post_categories_meta_box` или `post_tags_meta_box`. false — метабокс отключен.
-					'show_admin_column'     => false, // авто-создание колонки таксы в таблице ассоциированного типа записи. (с версии 3.5)
-					'show_in_rest'          => null, // добавить в REST API
-					'rest_base'             => null, // $taxonomy
-					// '_builtin'              => false,
-					//'update_count_callback' => '_update_post_term_count',
-				];
-
-				Create_taxonomy('$taxonomy_name','post',$arr_args);
-
-				// add_action( 'init', function(){
-				// 						echo('Создаю котегорию 1');
-				// 						return Create_taxonomy('$taxonomy_name','post',$arr_args);
-				// 						});
-				// echo($key . ' => ' . $value . '<br>');
-				};
-		$n_arr_posts_addPF ++;
-		};
-
-		print_taxonomies();
-
-	}	
-
-
-function Create_taxonomy($taxonomy_name,$object_type='post',$arr_args){
-
-
-	register_taxonomy( $taxonomy_name, $object_type, $arr_args );
-
-	}
-
-
-
-
-
 function test_func(){
-	// add_action( 'init', 'build_taxonomies');  
-	// add_action( 'init', 'test_taxonomy_register', 0 );  
-	// do_action('init');
-	
-	// $summa = $_POST['param1'] + $_POST['param2'];
-	echo ')))))))))))))))))))))))))))))))';
+
+
+	print_taxonomies();
  
 	die; // даём понять, что обработчик закончил выполнение
 
@@ -206,19 +108,6 @@ function test_func(){
 	}
 
 
-
-
-// function build_taxonomies(){
-	
-// 	register_taxonomy( 'operating_system', 
-// 					   'post', 
-// 						array( 'hierarchical' => true, 
-// 							   'label' => 'Operating System'
-// 						) 
-// 					); 
-// 	print_taxonomies();
-
-// 	}
 
 
 
@@ -257,15 +146,13 @@ function test_func(){
 
 
 
-// add_action( 'my_action_1', 'mayak_taxonomy_register' );
-
+add_action( 'init', 'test_taxonomy_register' );
 function test_taxonomy_register(){
-	echo '<pre>'; print_r('my_action_1'); echo '</pre>';
     $labels = array(
-            'name'                       => 'Категории',
+            'name'                       => 'Моя котегория',
             'singular_name'              => 'Категория',
-            'menu_name'                  => 'Категории' ,
-            'all_items'                  => 'Все категории',
+            'menu_name'                  => 'Моя котегория' ,
+            'all_items'                  => 'Все Моя котегория',
             'edit_item'                  => 'Редактировать категорию',
             'view_item'                  => 'Посмотреть категорию',
             'update_item'                => 'Сохранить категорию',
@@ -284,7 +171,7 @@ function test_taxonomy_register(){
     		);
     $args = array(
         'labels'                => $labels,
-        'label'                 => 'Категории',
+        'label'                 => 'Моя котегория',
         'public'                => true,
         'publicly_queryable'    => true,
         'show_ui'               => true,
@@ -305,9 +192,9 @@ function test_taxonomy_register(){
         'sort'                  => true,
         '_builtin'              => false,
     	);
-	register_taxonomy('RRRRRRR', array('post'), $args);
+	register_taxonomy('Моя котегория', array('post'), $args);
 
-	print_taxonomies();
+	
 
 
 }

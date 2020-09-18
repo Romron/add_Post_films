@@ -18,53 +18,6 @@
 	
 
 
-	<input id="start_jQuery" type="button" value="jQuery">
-
-
-	
-<!-- 	<script>
-	jQuery(function($){
-		$('#start_jQuery').click(function(){
-			console.log('Если это работает, уже неплохо');
-		});
-	});
-	</script> -->
-
-	<?php
-	// echo( plugin_dir_url(__FILE__) . 'test_1.php' );
-
-	?>
-
-<script>
-	jQuery(function($){
-		$('#start_jQuery').click(function(){
-			$.ajax({
-				// url: 'http://test-local-host/wp-content/plugins/add_Post_films/test_1.php',
-				url: '<?php echo admin_url("admin-ajax.php") ?>',
-				type: 'GET',
-				data: 'action=my_action¶m1=2¶m2=3', // можно также передать в виде объекта
-				// beforeSend: fucntion( xhr ){
-				// 	$('#start_jQuery').text('Загрузка, 5 сек...');	
-				// },
-				success: function( data ){
-					$('#start_jQuery').text('Отправить');	
-					// alert( data );
-				}
-			});
-			// если элемент – ссылка, то не забываем:
-			// return false;
-		});
-	});
-</script>
-
-
-
-
-
-
-
-
-
 
 
 
