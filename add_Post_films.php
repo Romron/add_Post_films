@@ -6,6 +6,7 @@
 
 
  */
+require_once("function.php");
 define( 'ADDPOSTFILMS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 // require_once( ADDPOSTFILMS__PLUGIN_DIR . 'functions_add_Post_films.php' );
@@ -20,9 +21,12 @@ function admin_add_menu_add_Post_films(){
                     ''
                 );
    
-		wp_enqueue_script( 'script_add_Post_films.js',  plugin_dir_url( __FILE__ ) . 'script_add_Post_films.js');
+		wp_enqueue_script( 'addPostFilms_script.js',  plugin_dir_url( __FILE__ ) . 'addPostFilms_script.js');
 		wp_enqueue_style( 'style', plugin_dir_url( __FILE__ ) . 'style.css');
         // wp_enqueue_script( 'taxonomy.php',  '../includes/taxonomy.php');
+
+
+
 
 
 
