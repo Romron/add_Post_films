@@ -5,23 +5,7 @@
 	<link href="style.css" rel="stylesheet" type="css/text">
 <?php
 	// require_once("functions_add_Post_films.php");
-	// require_once("style_add_Post_films.css");
-	// $parth_to_plugin = plugin_dir_path( __FILE__ );
-	// echo($parth_to_plugin);
-	// require_once("W:/domains/Prostofilm.localhost/wp-includes/taxonomy.php");
-
-// echo(ADDPOSTFILMS__PLUGIN_DIR);
-// echo('<br>');
-// echo('../wp-content/plugins/add_Post_films/');
-
-
- //   W:\domains\Prostofilm.localhost\wp-content\plugins\add_Post_films/
-//    W:\domains\Prostofilm.localhost\wp-includes\taxonomy.php
-
-// require_once( ADDPOSTFILMS__PLUGIN_DIR . 'functions_add_Post_films.php' );
-
-
-
+	// ffffffffffffffffff
 ?>
 
 </head>

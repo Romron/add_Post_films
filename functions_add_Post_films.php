@@ -89,8 +89,6 @@ function Create_taxonomy_addPF($file_name_addPF){
 	// а непосредственно создание таксономий в ф-ции Create_taxonomy()
 	// Создать массив категорий из указанных элементов массива $arr_films_addPF
 	// Создать категорию для каждого ээлемента полученного массива
-	
-
 
 	$arr_films_addPF = Json__addPF($file_name_addPF);
 	$len_arr_posts_addPF = count($arr_films_addPF);	
@@ -165,14 +163,34 @@ function Create_taxonomy_addPF($file_name_addPF){
 		$n_arr_posts_addPF ++;
 		};
 
-		echo(get_home_path());
+		$args = array(
+			'public'   => true,
+			'_builtin' => true
+		);
+
+		$output = 'names'; // или objects
+		$operator = 'and'; // 'and' или 'or'
+
+
+		// echo '<pre>'; print_r(get_taxonomies( $args, $output, $operator )); echo '</pre>';
+
+		$taxonomies = get_taxonomies( $args, $output, $operator );
+				echo '<p><h3> Список имён зарегистрированных таксономий: </h3></p>';
+		if( $taxonomies ){
+			foreach( $taxonomies as $taxonomy ){
+				echo '<p>'. $taxonomy. '</p>';
+			}
+		}else{echo '<p> Зарегистрированных таксаномий нет </p>';}
+
+
 
 
 	}	
 
 
 function Create_taxonomy($taxonomy_name,$object_type='post',$arr_args){
-	echo('Создаю котегорию 2');
+
+
 	register_taxonomy( $taxonomy_name, $object_type, $arr_args );
 
 	}
