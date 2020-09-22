@@ -13,12 +13,21 @@
 <body>
 	<h1>addPostFilms DashBoard</h1>
 
-	<?# echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>
 	<input id="start_button" type="button" value="START">
-	<div id="result"></div>
+	<div id="result">	</div>
 	
+		<? 	//global $post;
 
-	
+
+			// $myposts = get_posts();
+
+			// echo '**<pre>'; print_r($myposts); echo '</pre>**';
+
+
+		// echo(my_template());
+
+		?>
+
 <!-- для ajax: -->
 	<script src="<?echo(plugins_url('add_Post_films/addPostFilms_script.js'));?>"></script>
 

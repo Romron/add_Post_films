@@ -6,7 +6,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 
 // add_action() - это аналог создания (определения) функции в PHP.
 // do_action() - это аналог использования (вызова) функции в PHP.
-// Вы в PHP тоже при создании функции, сразу ей переменные передаете, а какие?.. Или может, создаете функцию, определяете для неё какие переменные она может получить, а передаете переменные уже при вызове (использовании) функции?
+// Вы в PHP тоже при создании функции, сразу ей переменные передаете, а какие?.. Или может, создаете Фильм, определяете для неё какие переменные она может получить, а передаете переменные уже при вызове (использовании) функции?
 
 
 function Json__addPF($file_name_addPF){
@@ -91,62 +91,133 @@ function print_taxonomies(){
 				echo '<pre>'; print_r($terms); echo '</pre>';
 			}
 		}else{echo '<p> Зарегистрированных таксаномий нет </p>';}
-		}
+}
 
 //	рабочий вариант добавления таксономии в админ меню сайта
 // add_action( 'init', 'test_taxonomy_register' );
-function test_taxonomy_register(){
-    $labels = array(
-            'name'                       => 'Моя котегория 2',
-            'singular_name'              => 'Категория',
-            'menu_name'                  => 'Моя котегория 2' ,
-            'all_items'                  => 'Все Моя котегория',
-            'edit_item'                  => 'Редактировать категорию',
-            'view_item'                  => 'Посмотреть категорию',
-            'update_item'                => 'Сохранить категорию',
-            'add_new_item'               => 'Добавить новую категорию',
-            'new_item_name'              => 'Новая категория',          
-            'parent_item'                => 'Родительская категория',
-            'parent_item_colon'          => 'Родительская категория:',
-            'search_items'               => 'Поиск по категориям',
-            'popular_items'              => 'Популярные Метки',
-            'separate_items_with_commas' => 'Список Меток (разделяются запятыми)',
-            'add_or_remove_items'        => 'Добавить или удалить Метку',
-            'choose_from_most_used'      => 'Выбрать Метку',
-            'add_or_remove_items'        => 'Добавить или удалить Метку',
-            'not_found'                  => 'Меток не найдено',
-            'back_to_items'              => 'Назад на страницу рубрик',
-    		);
-    $args = array(
-        'labels'                => $labels,
-        'label'                 => 'Моя котегория',
-        'public'                => true,
-        'publicly_queryable'    => true,
-        'show_ui'               => true,
-        'show_in_menu'          => true,
-        'show_in_nav_menus'     => true,
-        'show_in_rest'          => false,
-        'rest_base'             => 'url_rest',
-        'rest_controller_class' => 'WP_REST_Terms_Controller',
-        'show_tagcloud'         => true,
-        'show_in_quick_edit'    => true,
-        'meta_box_cb'           => null,
-        'show_admin_column'     => true,
-        'description'           => '',
-        'hierarchical'          => true,
-        'update_count_callback' => '',
-        'query_var'             => $taxonomy,       
-        'rewrite'               => true,
-        'sort'                  => true,
-        '_builtin'              => false,
-    	);
-	register_taxonomy('Моя котегория 2', array('post'), $args);
+// function test_taxonomy_register(){
+//     $labels = array(
+//             'name'                       => 'Моя котегория 2',
+//             'singular_name'              => 'Категория',
+//             'menu_name'                  => 'Моя котегория 2' ,
+//             'all_items'                  => 'Все Моя котегория',
+//             'edit_item'                  => 'Редактировать категорию',
+//             'view_item'                  => 'Посмотреть категорию',
+//             'update_item'                => 'Сохранить категорию',
+//             'add_new_item'               => 'Добавить новую категорию',
+//             'new_item_name'              => 'Новая категория',          
+//             'parent_item'                => 'Родительская категория',
+//             'parent_item_colon'          => 'Родительская категория:',
+//             'search_items'               => 'Поиск по категориям',
+//             'popular_items'              => 'Популярные Метки',
+//             'separate_items_with_commas' => 'Список Меток (разделяются запятыми)',
+//             'add_or_remove_items'        => 'Добавить или удалить Метку',
+//             'choose_from_most_used'      => 'Выбрать Метку',
+//             'add_or_remove_items'        => 'Добавить или удалить Метку',
+//             'not_found'                  => 'Меток не найдено',
+//             'back_to_items'              => 'Назад на страницу рубрик',
+//     		);
+//     $args = array(
+//         'labels'                => $labels,
+//         'label'                 => 'Моя котегория',
+//         'public'                => true,
+//         'publicly_queryable'    => true,
+//         'show_ui'               => true,
+//         'show_in_menu'          => true,
+//         'show_in_nav_menus'     => true,
+//         'show_in_rest'          => false,
+//         'rest_base'             => 'url_rest',
+//         'rest_controller_class' => 'WP_REST_Terms_Controller',
+//         'show_tagcloud'         => true,
+//         'show_in_quick_edit'    => true,
+//         'meta_box_cb'           => null,
+//         'show_admin_column'     => true,
+//         'description'           => '',
+//         'hierarchical'          => true,
+//         'update_count_callback' => '',
+//         'query_var'             => $taxonomy,       
+//         'rewrite'               => true,
+//         'sort'                  => true,
+//         '_builtin'              => false,
+//     	);
+// 	register_taxonomy('Моя котегория 2', array('post'), $args);
+// }
+
+
+
+//====================================================================================
+//====================================================================================
+
+
+// Создаю типы постов 
+add_action( 'init', 'register_post_type_AddPF' ); // Использовать Фильм только внутри хука init
+ 
+function register_post_type_AddPF() {
+	$labels = array(
+		'name' => 'Фильмы',
+		'singular_name' => 'Фильм', // админ панель Добавить->Фильм
+		'add_new' => 'Добавить Фильм',
+		'add_new_item' => 'Добавить новую Фильм', // заголовок тега <title>
+		'edit_item' => 'Редактировать Фильм',
+		'new_item' => 'Новый фильм',
+		'all_items' => 'Все Фильмы',
+		'view_item' => 'Просмотр Фильмы на сайте',
+		'search_items' => 'Искать Фильмы',
+		'not_found' =>  'Функций не найдено.',
+		'not_found_in_trash' => 'В корзине нет функций.',
+		'menu_name' => 'ФИЛЬМЫ' // ссылка в меню в админке
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'show_ui' => true, // показывать интерфейс в админке
+		// 'has_archive' => true, 
+		// 'menu_icon' => get_stylesheet_directory_uri() .'/img/function_icon.png', // иконка в меню
+		// 'menu_position' => 20, // порядок в меню
+		// 'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail')
+	);
+	register_post_type('Фильмы_15', $args);
 }
 
 
 
-//====================================================================================
-//====================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+// Устанавливаю пути к файлам шаблонов страниц
+$arr_file_templates = array(
+				'films'=>'',
+				'announcement'=>'',
+				'posters'=>'',
+				'acters'=>'',
+				'news'=>'',
+			);
+
+// $template - путь до файла шаблона. Изменяя этот путь мы изменяем файл шаблона.
+add_filter('template_include', 'my_template');
+function my_template( /*$template*/ ) {
+	$arr_posts = get_posts();
+	foreach ($arr_posts as $post) {
+		if( $post['post_type'] == 'post' ){
+			return 'print_r($post)';
+			}
+	// 	// 	return get_stylesheet_directory() . '/book-tpl.php';
+		}	
+
+
+	}
+
+
+
 
 
 
