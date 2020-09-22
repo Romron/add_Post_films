@@ -15,7 +15,7 @@ add_action("admin_menu", "admin_add_menu_add_Post_films");
 
 function admin_add_menu_add_Post_films(){ 
     add_menu_page( 'addPostFilms_dashboard.php',  
-                    'add_Post_films', 
+                    'add_Post_films_2.0', 
                     'manage_options', 
                     plugin_dir_path( __FILE__ ).'addPostFilms_dashboard.php',  
                     ''

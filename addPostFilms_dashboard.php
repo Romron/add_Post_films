@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>addPostFilms DashBoard</title>
+	<title>addPostFilms_2.0 DashBoard</title>
 	<link href="style.css" rel="stylesheet" type="css/text">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <?php
