@@ -75,6 +75,7 @@ function  translit($str_rus,$flag_change_of_registers=0){
 
 	}
 
+
 function print_taxonomies(){
 		$args = array(
 			'public'   => true,
@@ -96,87 +97,191 @@ function print_taxonomies(){
 //	рабочий вариант добавления таксономии в админ меню сайта
 // add_action( 'init', 'test_taxonomy_register' );
 // function test_taxonomy_register(){
-//     $labels = array(
-//             'name'                       => 'Моя котегория 2',
-//             'singular_name'              => 'Категория',
-//             'menu_name'                  => 'Моя котегория 2' ,
-//             'all_items'                  => 'Все Моя котегория',
-//             'edit_item'                  => 'Редактировать категорию',
-//             'view_item'                  => 'Посмотреть категорию',
-//             'update_item'                => 'Сохранить категорию',
-//             'add_new_item'               => 'Добавить новую категорию',
-//             'new_item_name'              => 'Новая категория',          
-//             'parent_item'                => 'Родительская категория',
-//             'parent_item_colon'          => 'Родительская категория:',
-//             'search_items'               => 'Поиск по категориям',
-//             'popular_items'              => 'Популярные Метки',
-//             'separate_items_with_commas' => 'Список Меток (разделяются запятыми)',
-//             'add_or_remove_items'        => 'Добавить или удалить Метку',
-//             'choose_from_most_used'      => 'Выбрать Метку',
-//             'add_or_remove_items'        => 'Добавить или удалить Метку',
-//             'not_found'                  => 'Меток не найдено',
-//             'back_to_items'              => 'Назад на страницу рубрик',
-//     		);
-//     $args = array(
-//         'labels'                => $labels,
-//         'label'                 => 'Моя котегория',
-//         'public'                => true,
-//         'publicly_queryable'    => true,
-//         'show_ui'               => true,
-//         'show_in_menu'          => true,
-//         'show_in_nav_menus'     => true,
-//         'show_in_rest'          => false,
-//         'rest_base'             => 'url_rest',
-//         'rest_controller_class' => 'WP_REST_Terms_Controller',
-//         'show_tagcloud'         => true,
-//         'show_in_quick_edit'    => true,
-//         'meta_box_cb'           => null,
-//         'show_admin_column'     => true,
-//         'description'           => '',
-//         'hierarchical'          => true,
-//         'update_count_callback' => '',
-//         'query_var'             => $taxonomy,       
-//         'rewrite'               => true,
-//         'sort'                  => true,
-//         '_builtin'              => false,
-//     	);
-// 	register_taxonomy('Моя котегория 2', array('post'), $args);
-// }
+	//     $labels = array(
+	//             'name'                       => 'Моя котегория 2',
+	//             'singular_name'              => 'Категория',
+	//             'menu_name'                  => 'Моя котегория 2' ,
+	//             'all_items'                  => 'Все Моя котегория',
+	//             'edit_item'                  => 'Редактировать категорию',
+	//             'view_item'                  => 'Посмотреть категорию',
+	//             'update_item'                => 'Сохранить категорию',
+	//             'add_new_item'               => 'Добавить новую категорию',
+	//             'new_item_name'              => 'Новая категория',          
+	//             'parent_item'                => 'Родительская категория',
+	//             'parent_item_colon'          => 'Родительская категория:',
+	//             'search_items'               => 'Поиск по категориям',
+	//             'popular_items'              => 'Популярные Метки',
+	//             'separate_items_with_commas' => 'Список Меток (разделяются запятыми)',
+	//             'add_or_remove_items'        => 'Добавить или удалить Метку',
+	//             'choose_from_most_used'      => 'Выбрать Метку',
+	//             'add_or_remove_items'        => 'Добавить или удалить Метку',
+	//             'not_found'                  => 'Меток не найдено',
+	//             'back_to_items'              => 'Назад на страницу рубрик',
+	//     		);
+	//     $args = array(
+	//         'labels'                => $labels,
+	//         'label'                 => 'Моя котегория',
+	//         'public'                => true,
+	//         'publicly_queryable'    => true,
+	//         'show_ui'               => true,
+	//         'show_in_menu'          => true,
+	//         'show_in_nav_menus'     => true,
+	//         'show_in_rest'          => false,
+	//         'rest_base'             => 'url_rest',
+	//         'rest_controller_class' => 'WP_REST_Terms_Controller',
+	//         'show_tagcloud'         => true,
+	//         'show_in_quick_edit'    => true,
+	//         'meta_box_cb'           => null,
+	//         'show_admin_column'     => true,
+	//         'description'           => '',
+	//         'hierarchical'          => true,
+	//         'update_count_callback' => '',
+	//         'query_var'             => $taxonomy,       
+	//         'rewrite'               => true,
+	//         'sort'                  => true,
+	//         '_builtin'              => false,
+	//     	);
+	// 	register_taxonomy('Моя котегория 2', array('post'), $args);
+	// }
+
+
+add_action('init', 'add_custom_fields');
+function add_custom_fields(){
+	add_post_type_support( 'films', 'custom-fields');
+}
 
 
 
 //====================================================================================
 //====================================================================================
 
+function get_arr_from_json_file($file_name_json){
+	/*
+		получает файл импорта в формате json 
+		возвращает массив подготовленный для добавления постов
+	*/
+	echo "<br>Получен файл импорта:&nbsp;&nbsp;". $file_name_json ."<br>";
 
-// Создаю типы постов 
-add_action( 'init', 'register_post_type_AddPF' ); // Использовать Фильм только внутри хука init
- 
-function register_post_type_AddPF() {
-	$labels = array(
-		'name' => 'Фильмы',
-		'singular_name' => 'Фильм', // админ панель Добавить->Фильм
-		'add_new' => 'Добавить Фильм',
-		'add_new_item' => 'Добавить новую Фильм', // заголовок тега <title>
-		'edit_item' => 'Редактировать Фильм',
-		'new_item' => 'Новый фильм',
-		'all_items' => 'Все Фильмы',
-		'view_item' => 'Просмотр Фильмы на сайте',
-		'search_items' => 'Искать Фильмы',
-		'not_found' =>  'Функций не найдено.',
-		'not_found_in_trash' => 'В корзине нет функций.',
-		'menu_name' => 'ФИЛЬМЫ' // ссылка в меню в админке
-	);
-	$args = array(
-		'labels' => $labels,
-		'public' => true,
-		'show_ui' => true, // показывать интерфейс в админке
-		// 'has_archive' => true, 
-		// 'menu_icon' => get_stylesheet_directory_uri() .'/img/function_icon.png', // иконка в меню
-		// 'menu_position' => 20, // порядок в меню
-		// 'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail')
-	);
-	register_post_type('Фильмы_15', $args);
+	$json_str = file_get_contents ($file_name_json);
+	$arr_date_from_json = json_decode($json_str, true);
+
+	// echo "<pre>";
+	// print_r($arr_date_from_json);
+	// echo "</pre>";
+	return $arr_date_from_json;
+}
+
+
+
+
+function insert_Posts_films($arr_posts_from_json){
+	/*
+		Получает массив информации о фильмах
+
+		Создаёт посты 
+		указывая таксономии
+		Добавляет картинки
+
+	*/
+
+	// $plear_films = '<div id="yohoho" data-kinopoisk="'.$Id_kinopisk.'"></div> <script src="//yohoho.cc/yo.js"></script>';
+	// $plear_films = '<div id="yohoho" data-kinopoisk="'.$Id_kinopisk.'"></div> ';
+
+	foreach ($arr_posts_from_json as $arr_date_film) {
+		
+		if (!array_key_exists('Id_kinopisk', $arr_date_film)) {
+			continue;
+		}
+
+		$arr_post = array(
+			'comment_status' => 'open',                // 'closed' означает, что комментарии закрыты.
+			'ping_status'    => 'open',                // 'closed' означает, что пинги и уведомления выключены.
+			'post_content'   => '<the text of the post>',  // Полный текст записи.
+			'post_name'      => $arr_date_film['Id_kinopisk'],                // Альтернативное название записи (slug) будет использовано в УРЛе.
+			'post_status'    => 'publish',         // Статус создаваемой записи.
+			'post_title'     => $arr_date_film['Title'],       // Заголовок (название) записи.
+			'post_type'      => 'films', // Тип записи.
+			// 'post_category'  => array( <category id>, <...> ),    // Категория к которой относится пост (указываем ярлыки, имена или ID).
+			// 'tags_input'     => array( <tag>, <tag>, <...> ),     // Метки поста (указываем ярлыки, имена или ID).
+			// 'tax_input'      => array( 'taxonomy_name' => array( 'term', 'term2', 'term3' ) ), // К каким таксам прикрепить запись (указываем ярлыки, имена или ID).
+			// 'meta_input'     => [ 'meta_key'=>'meta_value' ],    // добавит указанные мета поля. По умолчанию: ''. с версии 4.4.
+		);
+
+		$post_id = wp_insert_post( $arr_post, $wp_error );		# Создаю пост
+		// в только что созданный пост добавляю поля и значения в них
+		foreach ($arr_date_film as $key => $value) {
+			if ($key == 'link_PagePosters') {
+				continue;
+			}elseif ($key == 'Id_kinopisk') {
+				$key = 'Plear_films';
+				$plear_films = '<div id="yohoho" data-kinopoisk="'.$arr_date_film['Id_kinopisk'].'"></div> <script src="//yohoho.cc/yo.js"></script>';
+				update_post_meta( $post_id, $key, $plear_films );  
+				continue;
+			}
+			if (is_array($value)) {
+				$value = implode(', ',$value);
+			}
+			update_post_meta( $post_id, $key, $value );  
+
+		}
+
+		// в только что созданный пост добаляю картинки
+		for ($n_poster=0; $n_poster < 6; $n_poster++) { 
+			$name_img_file = $arr_date_film['Id_kinopisk'].'_'.$n_poster.'.jpeg';
+			// if ( !insert_IMG_in_post($name_img_file, $post_id) ){
+			// 	// echo('Постер   '.$name_img_file.'  для  '.$arr_date_film['Title'].'<font size="3" color="red" >   существует, но добавить его к посту не удалось!! </font><br>');
+			// 	continue;
+			// }
+		}
+	}
+}
+
+
+function insert_IMG_in_post($name_img_file, $post_id = " " ){
+	
+	echo "<br>Пытаюсь добавить картинку: &nbsp;";
+	echo( '<br> name_img_file = '. $name_img_file );
+	
+	$upload_dir = wp_upload_dir();	// Получает данные о каталоге (папке) загрузок в виде массива параметров
+
+	$image_url =  $upload_dir['baseurl'] .'/posters/'. $name_img_file;
+	echo( '<br>Для &nbsp;'. $name_img_file . ': &nbsp;image_url = '. $image_url .'<br>');
+
+	$headers = @get_headers($image_url);
+
+	if(!isset($headers) || $headers[0] != 'HTTP/1.1 200 OK'){
+		echo'<font size="3" color="red" > Файл  &nbsp;&nbsp;'.$name_img_file.'&nbsp;&nbsp;  не нанайден!</font><br>';
+		return false;
+		}
+		echo'<font size="3" color="LimeGreen" > Файл  &nbsp;&nbsp;'.$name_img_file.'&nbsp;&nbsp;  нанайден!</font><br>';
+	$image_data = file_get_contents( $image_url );		// читает файл в строку
+	$filename = basename( $image_url );		// Возвращает имя файла из указанного пути
+	if ( wp_mkdir_p( $upload_dir['path'] ) ) {
+		$file = $upload_dir['path'] . '/' . $filename;
+		} else {
+			$file = $upload_dir['basedir'] . '/' . $filename;
+			}
+	file_put_contents( $file, $image_data );
+	$wp_filetype = wp_check_filetype( $filename, null );
+	$attachment = array(
+		'post_mime_type' => $wp_filetype['type'],
+		'post_title' => sanitize_file_name( $filename ),
+		'post_content' => '',
+		'post_status' => 'inherit'
+		);	
+
+	$attach_id = wp_insert_attachment( $attachment, $file, $post_id  );
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+	wp_update_attachment_metadata( $attach_id, $attach_data );
+
+	if( set_post_thumbnail( $post_id, $attach_id ) ){  //Устанавливает миниатюру записи по переданным ID записи и ID вложения (медиафайла). Если указанного вложения нет в базе данных, то функция удалит миниатюру записи.
+		
+		// echo 'Миниатюра установлена.';
+	}else{
+		echo '<br><font size="2" color="red" >Для поста: ' . $filename . ' Не удалось вставить миниатюру. </font>';
+	}
+
+	return $attach_id;
 }
 
 
@@ -193,34 +298,27 @@ function register_post_type_AddPF() {
 
 
 
-// Устанавливаю пути к файлам шаблонов страниц
-$arr_file_templates = array(
-				'films'=>'',
-				'announcement'=>'',
-				'posters'=>'',
-				'acters'=>'',
-				'news'=>'',
-			);
-
-// $template - путь до файла шаблона. Изменяя этот путь мы изменяем файл шаблона.
-add_filter('template_include', 'my_template');
-function my_template( /*$template*/ ) {
-	$arr_posts = get_posts();
-	foreach ($arr_posts as $post) {
-		if( $post['post_type'] == 'post' ){
-			return 'print_r($post)';
-			}
-	// 	// 	return get_stylesheet_directory() . '/book-tpl.php';
-		}	
-
-
-	}
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function test_func(){
 
