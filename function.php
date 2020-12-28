@@ -228,10 +228,10 @@ function insert_Posts_films($arr_posts_from_json){
 		// в только что созданный пост добаляю картинки
 		for ($n_poster=0; $n_poster < 6; $n_poster++) { 
 			$name_img_file = $arr_date_film['Id_kinopisk'].'_'.$n_poster.'.jpeg';
-			// if ( !insert_IMG_in_post($name_img_file, $post_id) ){
-			// 	// echo('Постер   '.$name_img_file.'  для  '.$arr_date_film['Title'].'<font size="3" color="red" >   существует, но добавить его к посту не удалось!! </font><br>');
-			// 	continue;
-			// }
+			if ( !insert_IMG_in_post($name_img_file, $post_id) ){
+				// echo('Постер   '.$name_img_file.'  для  '.$arr_date_film['Title'].'<font size="3" color="red" >   существует, но добавить его к посту не удалось!! </font><br>');
+				continue;
+			}
 		}
 	}
 }
@@ -239,6 +239,10 @@ function insert_Posts_films($arr_posts_from_json){
 
 function insert_IMG_in_post($name_img_file, $post_id = " " ){
 	
+
+	// add_image_size( 'size-for-posters', 240, 250 );	// регестрирую новый размер для ростеров
+
+
 	echo "<br>Пытаюсь добавить картинку: &nbsp;";
 	echo( '<br> name_img_file = '. $name_img_file );
 	

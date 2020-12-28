@@ -35,16 +35,21 @@
 		<?php 
 			// echo(plugins_url());
 
+		$sizes = get_intermediate_image_sizes();
+		echo '<pre>'; print_r($sizes); echo '</pre>';
+
+		echo "<br><br>-------------------------------------------------------------------<br><br>";
 
 
 		// получаю массив информации о фильмах:
 		$path_info = pathinfo(__file__);
 		$file_name_json = $path_info['dirname'] . '/json/result_DateAboutAllFilms  TEST 10 .json';
 		$arr_posts_from_json = get_arr_from_json_file($file_name_json);
+		$result_Insert_Posts = insert_Posts_films($arr_posts_from_json);
 
 
 
-		// $result_Insert_Posts = insert_Posts_films($arr_posts_from_json);
+
 
 		?>
 
@@ -65,7 +70,9 @@
 			<?php while ( $wpb_all_query->have_posts() ) : $wpb_all_query->the_post(); ?>
 				<li>
 					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-					<?php $media = get_attached_media( 'image');?> <pre><?php  # print_r( $media );  ?></pre>
+					
+					<?php $media = get_attached_media('image');?> 
+					<?php  echo '<pre>'; print_r($media); echo '</pre>';  ?>
 				</li>
 
 			<?php endwhile; ?>
