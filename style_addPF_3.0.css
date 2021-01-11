@@ -1,0 +1,196 @@
+.wrap_0{
+	border: 1px solid #B79DBD;
+
+}
+
+.wrap{
+	display: inline-flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	width: 98%;
+}
+
+.wrap_1{
+	width: 45%;
+	height: 460px;
+	text-align: center;
+	padding: 5px;
+}
+
+.wrap_2{
+	margin: 0px;
+	padding-bottom: 0px;
+	padding-top: 4px;
+	height: 120px;
+}
+
+.wrap_3{
+	height: 220px;
+	margin: 0px;
+}
+
+.wrap_4{
+	margin: 0px;
+	/*border: 0.5px dotted #B7B3B3;*/
+	flex-basis: 30%;
+}
+
+.wrap_5{
+	flex-basis: 50%;
+	/*height: 00px;*/
+	margin: 0px;
+
+}
+
+#wrap_column{
+	/*border: 0.5px dotted black;*/
+	width: 40%;
+	text-align: center;
+}
+
+#logo {
+	height: 160px;
+	width: 40%;
+	border: 0.5px dotted #B7B3B3;
+}
+
+#description{
+	border: 0.5px dotted #B7B3B3;
+	height: 100px;
+}
+
+#butt_start{
+	height: 50px;
+	width: 90%;
+	margin: 5px;
+
+}
+
+h3{
+	margin: 3px;
+	margin-bottom: 0px;
+	flex-basis: 100%;
+	padding: 0px;
+	text-align: center;
+}
+
+h4{
+	margin: 5px;
+	margin-top: -3px;
+}
+
+#start{
+	height: 75px;
+}
+
+div#text_existing_posts > a{
+	text-decoration: none;
+	color: black;
+}
+
+
+#text_existing_posts{
+	font-size: 12px;
+	line-height: 14px;
+	/*border: 1px solid black;*/
+	background: #e6e3ea;
+	border-radius: 5px;
+	margin: 1px;
+	margin-top: 5px;
+	margin-bottom: 8px;
+	padding: 2px;
+}
+
+#text_existing_posts:hover{
+	background: #bfbdbd;
+	zoom: 1.2;
+}
+
+div.text_taxonomys h4{
+	margin-top: 3px;
+	margin-bottom: -7px;
+	padding: 0px;
+}
+
+.addPF{
+	border: 1px solid #bcbcbc;
+	margin: 5px;
+
+}
+
+.current_state {
+	height: 320px;
+	margin: 5px;
+	padding: 3px;
+	overflow-y: auto;
+	border-radius: 8px;
+}
+
+.date_for_import{
+	height: 220px;
+	overflow-y: auto;
+}
+
+.date_for_import_2{
+	height: 220px;
+}
+
+#result{
+	width: 97%;
+	min-height: 300px;
+	
+}
+
+/* полоса прокрутки (скроллбар) */
+div ::-webkit-scrollbar {
+    width: 4px; /* ширина для вертикального скролла */
+    border-radius: 20em;
+    background-color: #bcbcbc;
+}
+
+/* ползунок скроллбара */
+div ::-webkit-scrollbar-thumb {
+    background-color: #47515b;
+    border-radius: 20em;
+    box-shadow: inset 1px 1px 20px #f3faf1;
+}
+
+.form_1,.but_1{
+	border: 1px solid #B79DBD;
+	border-radius: 7px;
+	height: 45px;
+	margin: 4px;
+}
+
+.form_1{
+	flex-basis: 70%;
+	text-align: left;
+	padding-left: 7px;
+  	align-items: center;	/*выравнивание по вертикали*/
+  	display: inline-flex;
+	justify-content: space-between;
+}
+
+.but_1{
+	flex-basis: 25%;
+}
+
+.text_in_for_1{
+	flex-basis: 30%;
+}
+
+.form_2{
+	height: 30px;
+	flex-basis: 85%;
+}
+
+
+img{
+	margin: 0px;
+	padding: 0px;
+}
+
+img:hover{
+	/*zoom: 1.05;*/
+	/*overflow: visible;*/
+}
