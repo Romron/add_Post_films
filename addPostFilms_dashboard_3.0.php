@@ -22,7 +22,7 @@
 			<h3>Текущее состояние сайта</h3>
 			<div class='wrap_4'>
 				<h4>Существующие <br> записи</h4>
-				<div class='addPF current_state text_format'>
+				<div class='addPF current_state text_format' id="existing_post">
 					<?php	
 						$arg = array(
 							'post_type' => 'any',
@@ -32,9 +32,9 @@
 						foreach( $arr_posts as $post ){
 							setup_postdata( $post );
 							?>
-							<div id="text_existing_posts">
-								<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-							</div>
+<!-- 							<div class="text_existing_posts">
+								<a href="<?php //the_permalink(); ?>"><?php //the_title(); ?></a>
+							</div> -->
 							<?php
 						}
 						wp_reset_postdata();
@@ -95,9 +95,9 @@
 				</div>
 			</div>
 		
-			<butt class='but_1'>Удалить все <br>записи</butt>
-			<butt class='but_1'>Удалить все таксономии</butt>
-			<butt class='but_1'>Удалить все картинки</butt>
+			<button class='but_1' id='del_all_posts'>Удалить все <br>записи</button>
+			<button class='but_1'>Удалить все таксономии</button>
+			<button class='but_1'>Удалить все картинки</button>
 		</div>
 		<div class="wrap wrap_0 wrap_1">	
 			<h3>Данные для импорта</h3>
@@ -141,7 +141,7 @@
 
 
 
-
+<script src="<?echo(plugins_url('add_Prosto_films_3.0/script_addPF_3.0.js'));?>" type="text/javascript"></script>
 <!-- Для LiveReload: -->
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>

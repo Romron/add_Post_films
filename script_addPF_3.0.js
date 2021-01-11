@@ -6,31 +6,44 @@
 
 
 window.onload = function(){
-	document.querySelector('#start_button').onclick = function(){
-		ajaxGet();
+	// document.querySelector('#butt_start').onclick = function(){
+	document.querySelector('#del_all_posts').onclick = function(){
+		ajaxGet('../wp-content/plugins/add_Prosto_films_3.0/test_2.php',
+			function callback(data){
+				arr_posts = JSON.parse(data);
+
+				for (var i = arr_posts.length - 1; i >= 0; i--) {
+					// let div_text_existing_posts = document.createElement('div');
+					div_text_existing_posts.className = 'text_existing_posts';
+					div_text_existing_posts.innerHTML = arr_posts[i]['post_title'];
+					document.querySelector('#existing_post').append(div_text_existing_posts);
+				}
+
+
+
+			});
 	}
 }
 
-function ajaxGet() {
-	var request = new XMLHttpRequest();
-
+function ajaxGet(url,callback) {
+	let request = new XMLHttpRequest();
+	let f = callback || function(data){};
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && request.status == 200){
-			
-			var stringToDisplayOnScreen =  ResponseProcessing(request.responseText);
-			document.querySelector('#result').innerHTML = stringToDisplayOnScreen;
+			f(request.responseText);
 		}
 	}
-
-	request.open('GET','../wp-content/plugins/add_Post_films/test_1.php');
+	request.open('GET',url);
 	request.send();
 }
 
+
+
+
+
+//--------------------------	ХЛАМ	---------------------------------
 function ResponseProcessing(request_responseText){
-
-
 	stringToDisplayOnScreen = request_responseText;
 	return stringToDisplayOnScreen;
-
 }
 

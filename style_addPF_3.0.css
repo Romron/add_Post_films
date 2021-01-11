@@ -89,7 +89,7 @@ div#text_existing_posts > a{
 }
 
 
-#text_existing_posts{
+.text_existing_posts{
 	font-size: 12px;
 	line-height: 14px;
 	/*border: 1px solid black;*/
