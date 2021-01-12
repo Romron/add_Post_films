@@ -32,9 +32,9 @@
 						foreach( $arr_posts as $post ){
 							setup_postdata( $post );
 							?>
-<!-- 							<div class="text_existing_posts">
-								<a href="<?php //the_permalink(); ?>"><?php //the_title(); ?></a>
-							</div> -->
+ 							<div class="text_existing_posts">
+								<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+							</div> 
 							<?php
 						}
 						wp_reset_postdata();

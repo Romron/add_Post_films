@@ -27,10 +27,7 @@ set_time_limit(0);
 		"Director"
 */
 
-// wp_insert_term('Привет', 'Genres', array('slug' => 'Привет'));
-
-
-
+// добавляю записи
 $path_info = pathinfo(__file__);
 $file_name_json = $path_info['dirname'] . '/json/result_DateAboutAllFilms  TEST 10 .json';
 $arr_posts_from_json = get_arr_from_json_file($file_name_json);
@@ -41,7 +38,7 @@ insert_Posts_films($arr_posts_from_json);
 
 
 
-echo('<br>====================================================<br>');
+echo('<br>===============	Результаты на экран	===========================<br>');
 print_taxonomies();
 
 
