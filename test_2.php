@@ -2,7 +2,20 @@
 require_once("function_addPF_3.0.php");
 set_time_limit(0);
  
+// echo '<pre>**  '; print_r($_POST); echo '  **</pre>';
 
+// echo('<br> массив GET:<br>');
+var_dump($_GET['param_1']);
+
+switch ($_GET['param_1']) {
+	case 'butt_start':
+		echo('<h1 color="red">OK</h1> ');
+		break;
+	
+	default:
+		# code...
+		break;
+}
 
 
 //------------------	ЧИСТОВИК	----------------------------
