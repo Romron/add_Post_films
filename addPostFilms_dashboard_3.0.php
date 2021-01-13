@@ -43,7 +43,7 @@
 			</div>
 			<div class='wrap_4'>
 				<h4>Существующие таксономии</h4>
-				<div class='addPF current_state' >
+				<div class='addPF current_state' id="existing_taxonomys">
 					<?php
 						$args = array(
 							'public'   => true,
@@ -51,11 +51,11 @@
 						);
 						$output = 'names';
 						$list_taxonomys = get_taxonomies($args,$output);
-						echo '<pre>'; print_r($list_taxonomy); echo '</pre>';
+						// echo '<pre>'; print_r($list_taxonomy); echo '</pre>';
 						$n = 1;
 						foreach ($list_taxonomys as $taxonomy) {
 					?>
-						<div class="text_taxonomys" id="text_existing_posts">
+						<div class="text_existing_taxonomys">
 
 					<?php		
 							echo('<h4>'.$n.'.'.$taxonomy.'</h4><br>');
@@ -96,7 +96,7 @@
 			</div>
 		
 			<button class='but_1' id='del_all_posts'>Удалить все <br>записи</button>
-			<button class='but_1'>Удалить все таксономии</button>
+			<button class='but_1' id='del_all_terms'>Удалить все термины</button>
 			<button class='but_1'>Удалить все картинки</button>
 		</div>
 		<div class="wrap wrap_0 wrap_1">	
@@ -112,6 +112,14 @@
 					<div class='form_1 form_2'></div>
 				</div>
 				<button class='but_1'>Выбрать другой тип записи</button>
+
+				<div class='form_1'>
+					<h5 class='text_in_for_1'>Папка с картинками:</h5>
+					<div class='form_1 form_2'></div>
+				</div>
+				<button class='but_1'>Выбрать другую папку</button>
+
+
 			</div>
 			<div class='wrap wrap_3'>
 				<div class='wrap_4 wrap_5'>
@@ -141,7 +149,7 @@
 
 
 
-<script src="<?echo(plugins_url('add_Prosto_films_3.0/script_addPF_3.0.js'));?>" type="text/javascript"></script>
+<script src="<?echo(plugins_url('add_Post_films_3.0/script_addPF_3.0.js'));?>" type="text/javascript"></script>
 <!-- Для LiveReload: -->
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
