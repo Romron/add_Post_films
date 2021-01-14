@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			<div class='wrap_4'>
-				<h4>Существующие таксономии</h4>
+				<h4>Существующие <br> таксономии</h4>
 				<div class='addPF current_state' id="existing_taxonomys">
 					<?php
 						$args = array(
@@ -51,21 +51,17 @@
 						);
 						$output = 'names';
 						$list_taxonomys = get_taxonomies($args,$output);
-						// echo '<pre>'; print_r($list_taxonomy); echo '</pre>';
 						$n = 1;
 						foreach ($list_taxonomys as $taxonomy) {
 					?>
-						<div class="text_existing_taxonomys">
+						<div class="existing_terms text_existing_posts">
 
 					<?php		
 							echo('<h4>'.$n.'.'.$taxonomy.'</h4><br>');
 							$n++;
 							$arr_terms = get_terms( $taxonomy, array("hide_empty" => false));
-							// echo '<pre>'; print_r($arr_terms); echo '</pre>';
 							foreach ($arr_terms as $term) {
-								echo('&nbsp;&nbsp;&nbsp;&nbsp;');
-								print_r($term->name);
-								echo('<br>');
+								echo('<p class="terms">'.$term->name.'</p>');
 							}
 					?>
 						</div>
@@ -106,7 +102,7 @@
 					<h5 class='text_in_for_1'>Для импорта выбран файл:</h5>
 					<div class='form_1 form_2'></div>
 				</div>
-				<button class='but_1'>Выбрать другой файл</button>
+				<button class='but_1' id="select_other_file">Выбрать другой файл</button>
 				<div class='form_1'>
 					<h5 class='text_in_for_1'>Тип записи:</h5>
 					<div class='form_1 form_2'></div>
@@ -147,9 +143,8 @@
 	</div>
 
 
-
-
 <script src="<?echo(plugins_url('add_Post_films_3.0/script_addPF_3.0.js'));?>" type="text/javascript"></script>
+
 <!-- Для LiveReload: -->
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>

@@ -88,7 +88,7 @@ h4{
 	height: 75px;
 }
 
-div#text_existing_posts > a{
+div.text_existing_posts > a{
 	text-decoration: none;
 	color: black;
 }
@@ -106,16 +106,18 @@ div#text_existing_posts > a{
 	padding: 2px;
 }
 
-#text_existing_posts:hover{
+.text_existing_posts:hover{
 	background: #bfbdbd;
 	zoom: 1.2;
 }
 
-div.text_taxonomys h4{
-	margin-top: 3px;
-	margin-bottom: -7px;
+div.existing_terms p{
+	margin: 0px;
 	padding: 0px;
 }
+
+
+
 
 .addPF{
 	border: 1px solid #bcbcbc;

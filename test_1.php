@@ -27,36 +27,28 @@ set_time_limit(0);
 		"Director"
 */
 
-
-
-del_all_terms();
-
-
-function del_all_terms(){
-	
-	$args = array(
-		'public'   => true,
-		'_builtin' => false
-	);
-	$output = 'names';
-	$list_all_terms = array();
-	$list_taxonomys = get_taxonomies($args,$output);
-	foreach ($list_taxonomys as $taxonomy) {
-		$list_terms = get_terms( [
-			'taxonomy' => $taxonomy,
-			'hide_empty' => false,
-		] );
-		foreach ($list_terms as $term) {
-			wp_delete_term( $term -> term_id, $term -> taxonomy );
-		}
-	}
-}
+//-----------------------------------------------------------------------------------
 
 
 
+	// $path_info = pathinfo(__file__);
+	// $file_name_json = $path_info['dirname'] . '/json/result_DateAboutAllFilms  TEST 10 .json';
+	// $arr_posts_from_json = get_arr_from_json_file($file_name_json);
+	// insert_Posts_films($arr_posts_from_json);
 
 
+	// $arr_posts = get_all_posts();
+	$arr_terms = get_all_terms();
+	echo '<pre>'; print_r($arr_terms); echo '</pre>';
 
+	// $arr_date[] = $arr_posts;
+	// $arr_date[] = $arr_terms;
+
+	// echo '<pre>'; print_r($arr_date); echo '</pre>';
+	// echo ('<br><br><br>');
+
+	// $json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+	// echo($json_arr_date);
 
 
 

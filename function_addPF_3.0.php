@@ -35,6 +35,107 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		return $arr_date_from_json;
 	}
 
+	function insert_Posts_films($arr_posts_from_json){
+		/*
+			Получает массив информации о фильмах
+			Создаёт посты типа "Films"
+			Добавляет в них новые поля
+			Добавляет картинки
+
+			Прикрепляет запись к термину (элементу таксономии). 
+			Создавать термины, если их нет данные для этого берёт из полей массива $arr_date_from_json
+
+		*/
+
+		foreach ($arr_posts_from_json as $arr_date_film) {
+			if (!array_key_exists('Id_kinopisk', $arr_date_film)) continue;
+			// добавляю элементы существующим таксономиям
+			
+			$arr_post = array(
+				'comment_status' => 'open',                // 'closed' означает, что комментарии закрыты.
+				'ping_status'    => 'open',                // 'closed' означает, что пинги и уведомления выключены.
+				'post_content'   => '<the text of the post>',  // Полный текст записи.
+				'post_name'      => $arr_date_film['Id_kinopisk'],  // Альтернативное название записи (slug) будет использовано в УРЛе.
+				'post_status'    => 'publish',   // Статус создаваемой записи.
+				'post_title'     => $arr_date_film['Title'],  // Заголовок (название) записи.
+				'post_type'      => 'films', // Тип записи.
+			);
+			$post_id = wp_insert_post( $arr_post );		# Безопасно вставляет/обновляет запись в базе данных.  т.е. Создаю пост
+			// в только что созданный пост добавляю поля и значения в них
+			foreach ($arr_date_film as $key => $value) {
+				if ($key == 'link_PagePosters') {
+					continue;
+				}elseif ($key == 'Id_kinopisk') {
+					$key = 'Plear_films';
+					$plear_films = '<div id="yohoho" data-kinopoisk="'.$arr_date_film['Id_kinopisk'].'"></div> <script src="//yohoho.cc/yo.js"></script>';
+					update_post_meta( $post_id, $key, $plear_films );  // Добавляю поля в запись
+					continue;
+				}
+				if (is_array($value)) {
+					$value = implode(', ',$value);
+				}
+				update_post_meta( $post_id, $key, $value );  // Добавляю поля в запись
+			}
+
+			// в только что созданный пост добаляю картинки
+			// TODO: НЕ дабавлять уже существующие картинки!!!
+			for ($n_poster=0; $n_poster < 6; $n_poster++) { 
+				$name_img_file = $arr_date_film['Id_kinopisk'].'_'.$n_poster.'.jpeg';
+				if ( !insert_IMG_in_post($name_img_file, $post_id) ){
+					// echo('Постер   '.$name_img_file.'  для  '.$arr_date_film['Title'].'<font size="3" color="red" >   существует, но добавить его к посту не удалось!! </font><br>');
+					continue;
+				}
+			}
+
+			add_new_taxonomy_item($arr_date_film,$post_id);  // только что созданный пост прикрепляю к таксономиям
+		}
+	}
+
+	function add_new_taxonomy_item($arr_date_film,$post_id){
+		/*
+			Получает:
+				массив данных о текущем фильме
+				название таксономии из ключа массива 
+				название элемента таксономии из поля массива
+			Переирает существующие таксономии 
+			Вызывает для каждой таксономии add_term() которая и добавляет элемент таксономии
+		*/
+
+		foreach ($arr_date_film as $taxonomy => $term) {
+
+			switch ($taxonomy) {
+				case 'ProductionYear':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+				case 'Country':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+				case 'Genre':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+				case 'Actors':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+				case 'Producer':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+				case 'Scenario':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+				case 'Director':
+					// add_term($taxonomy,$term,$post_id);
+					wp_set_object_terms($post_id,$term,$taxonomy);
+					break;
+			}
+		}
+	}
+
 	function insert_IMG_in_post($name_img_file, $post_id = " " ){
 		/*
 			Добавляет медиафайл (вложение) в медиатеку WordPress т.е. в базу даных.
@@ -84,7 +185,7 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		return $attach_id;
 	}
 
-	function  translit($str_rus,$flag_change_of_registers=0){
+	function translit($str_rus,$flag_change_of_registers=0){
 
 	  	$rus=array('А','Б','В','Г','Д','Е','Ё','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я','а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э','ю','я',' ');
 		$lat=array('a','b','v','g','d','e','e','gh','z','i','y','k','l','m','n','o','p','r','s','t','u','f','h','c','ch','sh','sch','y','y','y','e','yu','ya','a','b','v','g','d','e','e','gh','z','i','y','k','l','m','n','o','p','r','s','t','u','f','h','c','ch','sh','sch','y','y','y','e','yu','ya',' ');
@@ -132,8 +233,7 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 				'posts_per_page' => -1
 				);
 		$arr_posts = get_posts($arg);
-		$json_arr_posts = json_encode($arr_posts,JSON_UNESCAPED_UNICODE);
-		echo($json_arr_posts);
+		return $arr_posts;
 	}
 
 	function del_all_terms(){
@@ -167,147 +267,17 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 //============================================================================
 //		====================	РАЗРОБОТКА	==================================
 
-
-	function insert_Posts_films($arr_posts_from_json){
-		/*
-			Получает массив информации о фильмах
-			Создаёт посты типа "Films"
-			Добавляет в них новые поля
-			Добавляет картинки
-
-			Прикрепляет запись к термину (элементу таксономии). 
-			Создавать термины, если их нет данные для этого берёт из полей массива $arr_date_from_json
-
-		*/
-
-		foreach ($arr_posts_from_json as $arr_date_film) {
-			if (!array_key_exists('Id_kinopisk', $arr_date_film)) continue;
-			// добавляю элементы существующим таксономиям
-			
-
-			add_new_taxonomy_item($arr_date_film);
-			
-
-			$arr_post = array(
-				'comment_status' => 'open',                // 'closed' означает, что комментарии закрыты.
-				'ping_status'    => 'open',                // 'closed' означает, что пинги и уведомления выключены.
-				'post_content'   => '<the text of the post>',  // Полный текст записи.
-				'post_name'      => $arr_date_film['Id_kinopisk'],  // Альтернативное название записи (slug) будет использовано в УРЛе.
-				'post_status'    => 'publish',   // Статус создаваемой записи.
-				'post_title'     => $arr_date_film['Title'],  // Заголовок (название) записи.
-				'post_type'      => 'films', // Тип записи.
-				// 'post_category'  => array( <category id>, <...> ),    // Категория к которой относится пост (указываем ярлыки, имена или ID).
-				// 'tags_input'     => array( <tag>, <tag>, <...> ),     // Метки поста (указываем ярлыки, имена или ID).
-				// 'tax_input'      => array( 'taxonomy_name' => array('ProductionYear', 
-																	// 'Country', 
-																	// 'Genre', 
-																	// 'Actors', 
-																	// 'Producer',
-																	// 'Scenario',
-																	// 'Director'
-																	//  ) ), // К каким таксам прикрепить запись (указываем ярлыки, имена или ID).
-				// 'meta_input'     => [ 'meta_key'=>'meta_value' ],    // добавит указанные мета поля. По умолчанию: ''. с версии 4.4.
-			);
-			$post_id = wp_insert_post( $arr_post );		# Безопасно вставляет/обновляет запись в базе данных.  т.е. Создаю пост
-			// в только что созданный пост добавляю поля и значения в них
-			foreach ($arr_date_film as $key => $value) {
-				if ($key == 'link_PagePosters') {
-					continue;
-				}elseif ($key == 'Id_kinopisk') {
-					$key = 'Plear_films';
-					$plear_films = '<div id="yohoho" data-kinopoisk="'.$arr_date_film['Id_kinopisk'].'"></div> <script src="//yohoho.cc/yo.js"></script>';
-					update_post_meta( $post_id, $key, $plear_films );  
-					continue;
-				}
-				if (is_array($value)) {
-					$value = implode(', ',$value);
-				}
-				update_post_meta( $post_id, $key, $value );  
-			}
-
-			// в только что созданный пост добаляю картинки
-			// TODO: не дабавлять уже существующие картинки!!!
-			for ($n_poster=0; $n_poster < 6; $n_poster++) { 
-				$name_img_file = $arr_date_film['Id_kinopisk'].'_'.$n_poster.'.jpeg';
-				if ( !insert_IMG_in_post($name_img_file, $post_id) ){
-					// echo('Постер   '.$name_img_file.'  для  '.$arr_date_film['Title'].'<font size="3" color="red" >   существует, но добавить его к посту не удалось!! </font><br>');
-					continue;
-				}
-			}
-
-			// только что созданный пост прикрепляю к элементу таксономии
-			// wp_set_object_terms($post_id,)
-
-
-		}
+	function get_all_terms(){
+		$args = array(
+			'public'   => true,
+			'_builtin' => false
+		);
+		$output = 'names';
+		// $list_taxonomys = get_taxonomies($args,$output);
+		$arr_terms = get_terms( $taxonomy, array("hide_empty" => false));
+		
+		return $arr_terms;
 	}
-
-
-
-
-
-	function add_new_taxonomy_item($arr_date_film){
-		/*
-			Получает:
-				массив данных о текущем фильме
-				название таксономии из ключа массива 
-				название элемента таксономии из поля массива
-			Переирает существующие таксономии 
-			Вызывает для каждой таксономии add_term() которая и добавляет элемент таксономии
-
-
-		*/
-		foreach ($arr_date_film as $taxonomy => $term) {
-			switch ($taxonomy) {
-				case 'ProductionYear':
-					add_term($taxonomy,$term);
-					break;
-				case 'Country':
-					break;
-				case 'Genre':
-					add_term($taxonomy,$term);
-					break;
-				case 'Actors':
-					add_term($taxonomy,$term);
-					break;
-				case 'Producer':
-					add_term($taxonomy,$term);
-					break;
-				case 'Scenario':
-					add_term($taxonomy,$term);
-					break;
-				case 'Director':
-					add_term($taxonomy,$term);
-					break;
-			}
-		}
-	}
-
-	function add_term($taxonomy,$term){
-		/*
-			Проверяет отсутствие добавляемого элемента в таксономии
-			Добавляет єлемент таксономии
-
-
-		*/
-		if (is_array($term)) {		// получен массив терминов
-			foreach ($term as $key_term => $val_term) {
-				if (!term_exists($val_term, $taxonomy)){
-					$slug = translit($val_term);
-					wp_insert_term($val_term, $taxonomy, array('slug' => $slug,
-													'description' => $taxonomy));
-				}
-			}
-		}else{	// получен один термин
-			if (!term_exists($term, $taxonomy)){
-				echo('Такой таксономии нет <br>');
-				$slug = translit($term);
-				wp_insert_term($term, $taxonomy, array('slug' => $slug,
-												'description' => $taxonomy));
-			}
-		}
-	}
-
 
 
 
@@ -316,31 +286,6 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 
 //============================================================================
 //		====================	ЧЕРНОВИК	==================================
-
-	function print_taxonomies(){
-			$args = array(
-				'public'   => true,
-				'_builtin' => true
-			);
-			$output = 'names'; // или objects
-			// $operator = 'and'; // 'and' или 'or'
-			$taxonomies = get_taxonomies( $args, $output, $operator );
-			// $taxonomies = get_taxonomies();
-			if( $taxonomies ){
-				echo '<p><h3> Список зарегистрированных таксономий: </h3></p>';
-				foreach( $taxonomies as $taxonomy ){
-					echo '<p>'. $taxonomy. ':  </p>';
-					$terms = get_terms($taxonomy);
-					echo '<pre>'; print_r($terms); echo '</pre>';
-				}
-			}else{echo '<p> Зарегистрированных таксаномий нет </p>';}
-	}
-
-	add_action('init', 'add_custom_fields');
-	function add_custom_fields(){
-		add_post_type_support( 'films', 'custom-fields');
-	}
-
 
 
 

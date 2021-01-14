@@ -13,7 +13,15 @@ set_time_limit(0);
 			$arr_posts_from_json = get_arr_from_json_file($file_name_json);
 			insert_Posts_films($arr_posts_from_json);
 			
-			get_all_posts();
+			$arr_posts = get_all_posts();
+			$arr_terms = get_all_terms();
+
+			$arr_date[] = $arr_posts;
+			$arr_date[] = $arr_terms;
+
+
+			$json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+			echo($json_arr_date);
 
 			break;
 		case 'butt_del_all_posts':
@@ -22,6 +30,13 @@ set_time_limit(0);
 			break;
 		case 'butt_del_all_terms':
 			del_all_terms();
+			
+			break;		
+		case 'select_other_file':
+			// всё наполнение этого case для тестов
+			$arr_date = get_all_terms();
+			$json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+			echo($json_arr_date);
 			
 			break;
 		default:
@@ -34,9 +49,6 @@ set_time_limit(0);
 
 //------------------	РАЗРАБОТКА	----------------------------
 
-	function get_all_terms(){
-		$json_arr_posts = json_encode($list_taxonomys,JSON_UNESCAPED_UNICODE);
-	}
 
 
 //------------------	ЧЕРНОВИК	----------------------------
