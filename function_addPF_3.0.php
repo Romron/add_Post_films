@@ -273,8 +273,8 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 			'_builtin' => false
 		);
 		$output = 'names';
-		// $list_taxonomys = get_taxonomies($args,$output);
-		$arr_terms = get_terms( $taxonomy, array("hide_empty" => false));
+		$list_taxonomys = get_taxonomies($args,$output);
+		$arr_terms = get_terms( $list_taxonomys, array("hide_empty" => false));
 		
 		return $arr_terms;
 	}

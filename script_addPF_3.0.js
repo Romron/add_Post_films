@@ -12,47 +12,15 @@ window.onload = function(){
 	//--------------------------Для тестов--------
 	//По нажатию на кнопку 'Удалить все записи' запустить PHP скрипт удаляющий все записи
 	document.querySelector('#select_other_file').onclick = function(){
-		// console.log('Сработал onclick Выбрать другой файл');	// for test
+		console.log('Сработал onclick Выбрать другой файл');	// for test
 		body = 'param_1='+'select_other_file';
 		// paramsForGET = url + '?param_1=del_all_posts';
 		ajaxGet(url,'POST',body,
 			function callback(arr_terms){
-
 			//--------пока черновик
-
-				let arr_div_existing_taxonomys = document.querySelectorAll('.existing_terms h4');
-				console.log( arr_div_existing_taxonomys);//for test
-				// for (var i = 0; i < arr_terms.length; i++) {
-				for (var i = 0; i < 10; i++) {
 					
 
-					for (var q = 0; q < arr_div_existing_taxonomys.length; q++) {
-						console.log(arr_div_existing_taxonomys[q].parentNode);
-						switch (arr_div_existing_taxonomys[q]) {
-							case 'ProductionYear':
-								// statements_1
-								break;							
-							case 'Country':
-								// statements_1
-								break;							
-							case 'Genre':
-								// arr_div_existing_taxonomys[q].innerHTML = 
-								// break;							
-							case 'Actors':
-								// statements_1
-								break;							
-							case 'Producer':
-								// statements_1
-								break;
-							case 'Scenario':
-								// statements_1
-								break;
-							case 'Director':
-								// statements_1
-								break;
-						}
-					}
-				}
+
 			//-------------------------------------------
 
 			}
@@ -114,21 +82,121 @@ window.onload = function(){
 					document.querySelector('#existing_post').append(div_text_existing_posts);
 				}
 
-				for (var i = 0; i < arr_posts[1].length; i++) {
+			//--------пока черновик
 					
 
-					// let div_existing_terms = document.createElement('div');
-					// div_existing_terms.className = 'existing_terms';
-					
-					// div_existing_terms.innerHTML = '<h4>'+ i + '.' + arr_posts[1][i]['taxonomy'] + '</h4><br>';
+				//вывожу добавленные термины в поле после нажатия кнопки "СТАРТ" 
 
-					// div_existing_terms.innerHTML = arr_posts[1][i]['name'] + '<br>';
-					// document.querySelector('#existing_post').append(div_existing_terms);
+				let ProductionYear = [];
+				let Country = [];
+				let Genre = [];
+				let Actors = [];
+				let Producer = [];
+				let Scenario = [];
+				let Director = [];
+				let strHTML_Genre = '<h4> 1.'+ 'Genre' +'</h4><br>';
+				let strHTML_ProductionYear = '<h4> 2.'+ 'ProductionYear' +'</h4><br>';
+				let strHTML_Country = '<h4> 3.'+ 'Country' +'</h4><br>';
+				let strHTML_Actors = '<h4> 4.'+ 'Actors' +'</h4><br>';
+				let strHTML_Producer = '<h4> 5.'+ 'Producer' +'</h4><br>';
+				let strHTML_Scenario = '<h4> 6.'+ 'Scenario' +'</h4><br>';
+				let strHTML_Director = '<h4> 7.'+ 'Director' +'</h4><br>';
+				let arr_taxonomys = new Map();
+				let arr_strHTML = [];
 
 
+				// проверка на пустой массив
+				if (arr_date[1].length == 0) {
+					console.log('Масив терминов пуст');
+				} else {
+				// сортирую термины из полученного массива таксономий 
 
+
+				console.log("arr_date[1]:    ", arr_date[1]);
+
+
+				for (var i = 0; i < arr_date[1].length; i++) {
+					// for (var i = 0; i < 10; i++) {
+						switch (arr_date[1][i]['taxonomy']) {
+							case 'Genre':
+								Genre.push(arr_date[1][i]['name']);
+								break;							
+							case 'ProductionYear':
+								ProductionYear.push(arr_date[1][i]['name']);
+								break;							
+							case 'Country':
+								Country.push(arr_date[1][i]['name']);
+								break;							
+							case 'Actors':
+								Actors.push(arr_date[1][i]['name']);
+								break;							
+							case 'Producer':
+								Producer.push(arr_date[1][i]['name']);
+								break;
+							case 'Scenario':
+								Scenario.push(arr_date[1][i]['name']);
+								break;
+							case 'Director':
+								Director.push(arr_date[1][i]['name']);
+								break;
+						}
+						
+					}
+
+					// добавляю все отсортированые термины в один массив
+					arr_taxonomys.set('Genre',Genre);
+					arr_taxonomys.set('ProductionYear',ProductionYear);
+					arr_taxonomys.set('Country',Country);
+					arr_taxonomys.set('Actors',Actors);
+					arr_taxonomys.set('Producer',Producer);
+					arr_taxonomys.set('Scenario',Scenario);
+					arr_taxonomys.set('Director',Director);
+				}
+
+				arr_taxonomys.forEach(function(arr_terms_this_taxonomy,name_taxonomy){ 	
+					switch (name_taxonomy) {
+						case 'Genre':
+							make_str_terms(strHTML_Genre,arr_terms_this_taxonomy,arr_strHTML);
+						case 'ProductionYear':
+							make_str_terms(strHTML_ProductionYear,arr_terms_this_taxonomy,arr_strHTML);
+							break;							
+						case 'Country':
+							make_str_terms(strHTML_Country,arr_terms_this_taxonomy,arr_strHTML);
+							break;							
+							break;							
+						case 'Actors':
+							make_str_terms(strHTML_Actors,arr_terms_this_taxonomy,arr_strHTML);
+							break;							
+						case 'Producer':
+							make_str_terms(strHTML_Producer,arr_terms_this_taxonomy,arr_strHTML);
+							break;
+						case 'Scenario':
+							make_str_terms(strHTML_Scenario,arr_terms_this_taxonomy,arr_strHTML);
+							break;
+						case 'Director':
+							make_str_terms(strHTML_Director,arr_terms_this_taxonomy,arr_strHTML);
+							break;
+					}
+				});
+
+
+				// перед тем как вставлять новые div с терминами 
+				// удаляю старые, если они отображаються на экране
+				let arr_div_existing_taxonomys = document.querySelector('#existing_taxonomys').childNodes;
+				if (arr_div_existing_taxonomys.length != 0){
+					for (var i = arr_div_existing_taxonomys.length - 1; i >= 0; i--) {
+						arr_div_existing_taxonomys[i].remove();	// удаляет узел DOM
+					}
+				}
+
+				for (var q = 0; q < arr_strHTML.length; q++) {
+					let div_existing_terms = document.createElement('div');
+					div_existing_terms.className = 'existing_terms text_existing_posts';
+					div_existing_terms.innerHTML = arr_strHTML[q];
+					document.querySelector('#existing_taxonomys').append(div_existing_terms);
 
 				}
+			//-------------------------------------------
 			}
 		);
 	}
@@ -149,3 +217,11 @@ function ajaxGet(url,method='GET',body=null,callback) {
 }
 
 
+function make_str_terms(strHTML_Taxonomy,arr_terms_this_taxonomy,arr_strHTML) {
+	arr_terms_this_taxonomy.forEach(function(val_arr_terms_this_taxonomy,k_arr_term_this_taxonomy){
+		strHTML_Taxonomy = strHTML_Taxonomy + '<p class="terms">'+ val_arr_terms_this_taxonomy + '</p>'
+	});
+
+	arr_strHTML.push(strHTML_Taxonomy);
+	// return strHTML_Taxonomy;
+}

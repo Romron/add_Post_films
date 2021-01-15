@@ -38,8 +38,12 @@ set_time_limit(0);
 
 
 	// $arr_posts = get_all_posts();
-	$arr_terms = get_all_terms();
-	echo '<pre>'; print_r($arr_terms); echo '</pre>';
+	// $arr_terms = get_all_terms();
+	// echo '<pre>'; print_r($arr_terms); echo '</pre>';
+
+		echo'<h4> 4.Actors</h4><br><p class="terms">Aarti Kulkarni</p><p class="terms">Aurora Richards</p><p class="terms">Bryon Lerum</p><p class="terms">Christian Clements</p><p class="terms">Christian Moralde</p><p class="terms">David Buneta</p>';
+
+
 
 	// $arr_date[] = $arr_posts;
 	// $arr_date[] = $arr_terms;

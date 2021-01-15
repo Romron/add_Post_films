@@ -15,10 +15,8 @@ set_time_limit(0);
 			
 			$arr_posts = get_all_posts();
 			$arr_terms = get_all_terms();
-
 			$arr_date[] = $arr_posts;
 			$arr_date[] = $arr_terms;
-
 
 			$json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
 			echo($json_arr_date);
