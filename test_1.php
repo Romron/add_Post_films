@@ -30,32 +30,13 @@ set_time_limit(0);
 //-----------------------------------------------------------------------------------
 
 
+$arg = array(
+	'post_type' => 'any',
+	'posts_per_page' => -1
+);
 
-	// $path_info = pathinfo(__file__);
-	// $file_name_json = $path_info['dirname'] . '/json/result_DateAboutAllFilms  TEST 10 .json';
-	// $arr_posts_from_json = get_arr_from_json_file($file_name_json);
-	// insert_Posts_films($arr_posts_from_json);
-
-
-	// $arr_posts = get_all_posts();
-	// $arr_terms = get_all_terms();
-	// echo '<pre>'; print_r($arr_terms); echo '</pre>';
-
-		echo'<h4> 4.Actors</h4><br><p class="terms">Aarti Kulkarni</p><p class="terms">Aurora Richards</p><p class="terms">Bryon Lerum</p><p class="terms">Christian Clements</p><p class="terms">Christian Moralde</p><p class="terms">David Buneta</p>';
-
-
-
-	// $arr_date[] = $arr_posts;
-	// $arr_date[] = $arr_terms;
-
-	// echo '<pre>'; print_r($arr_date); echo '</pre>';
-	// echo ('<br><br><br>');
-
-	// $json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-	// echo($json_arr_date);
-
-
-
+$arr_posts = get_posts($arg);
+echo '<pre>'; print_r($arr_posts); echo '</pre>';
 
 
 
@@ -77,6 +58,28 @@ set_time_limit(0);
 
 
 
+	// $path_info = pathinfo(__file__);
+	// $file_name_json = $path_info['dirname'] . '/json/result_DateAboutAllFilms  TEST 10 .json';
+	// $arr_posts_from_json = get_arr_from_json_file($file_name_json);
+	// insert_Posts_films($arr_posts_from_json);
+
+
+	// $arr_posts = get_all_posts();
+	// $arr_terms = get_all_terms();
+	// echo '<pre>'; print_r($arr_terms); echo '</pre>';
+
+		// echo'<h4> 4.Actors</h4><br><p class="terms">Aarti Kulkarni</p><p class="terms">Aurora Richards</p><p class="terms">Bryon Lerum</p><p class="terms">Christian Clements</p><p class="terms">Christian Moralde</p><p class="terms">David Buneta</p>';
+
+
+
+	// $arr_date[] = $arr_posts;
+	// $arr_date[] = $arr_terms;
+
+	// echo '<pre>'; print_r($arr_date); echo '</pre>';
+	// echo ('<br><br><br>');
+
+	// $json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+	// echo($json_arr_date);
 
 
 

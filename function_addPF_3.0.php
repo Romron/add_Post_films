@@ -206,23 +206,6 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 	 	return $str_lat;
 	}
 
-	function del_all_posts(){
-		/*
-			удаляет все посты
-		*/
-		$arg = array(
-			'post_type' => 'any',
-			'posts_per_page' => -1
-		);
-		$arr_posts = get_posts($arg);
-		foreach( $arr_posts as $post ){
-			// echo('Удxаляю запись с ID = '.$post->ID.'<br>');
-			setup_postdata( $post );
-			$massage_del = wp_delete_post($post->ID,'true');
-		}
-		wp_reset_postdata();
-	}
-
 	function get_all_posts(){
 		/*
 			Получает все посты
@@ -235,6 +218,18 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		$arr_posts = get_posts($arg);
 		return $arr_posts;
 	}
+
+	function get_all_terms(){
+		$args = array(
+			'public'   => true,
+			'_builtin' => false
+		);
+		$output = 'names';
+		$list_taxonomys = get_taxonomies($args,$output);
+		$arr_terms = get_terms( $list_taxonomys, array("hide_empty" => false));
+		
+		return $arr_terms;
+	}	
 
 	function del_all_terms(){
 		
@@ -257,27 +252,35 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 	}
 
 
-
-
-
-
-
-
-
 //============================================================================
 //		====================	РАЗРОБОТКА	==================================
 
-	function get_all_terms(){
-		$args = array(
-			'public'   => true,
-			'_builtin' => false
+
+	function del_all_posts(){
+		/*
+			удаляет все посты
+		*/
+		$arg = array(
+			'post_type' => 'any',
+			'posts_per_page' => -1
 		);
-		$output = 'names';
-		$list_taxonomys = get_taxonomies($args,$output);
-		$arr_terms = get_terms( $list_taxonomys, array("hide_empty" => false));
-		
-		return $arr_terms;
+		$arr_posts = get_posts($arg);
+
+		foreach( $arr_posts as $post ){
+			// echo('Удxаляю запись с ID = '.$post->ID.'<br>');
+			setup_postdata( $post );
+			$massage_del = wp_delete_post($post->ID,'true');
+		}
+		wp_reset_postdata();
 	}
+
+
+
+
+
+
+
+
 
 
 

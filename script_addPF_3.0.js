@@ -9,23 +9,23 @@ window.onload = function(){
 
 	url = '../wp-content/plugins/add_Post_films_3.0/test_2.php'; 
 
-	//--------------------------Для тестов--------
-	//По нажатию на кнопку 'Удалить все записи' запустить PHP скрипт удаляющий все записи
-	document.querySelector('#select_other_file').onclick = function(){
-		console.log('Сработал onclick Выбрать другой файл');	// for test
-		body = 'param_1='+'select_other_file';
-		// paramsForGET = url + '?param_1=del_all_posts';
-		ajaxGet(url,'POST',body,
-			function callback(arr_terms){
-			//--------пока черновик
-					
+	//=========================	Для тестов	================
+		//По нажатию на кнопку 'Удалить все записи' запустить PHP скрипт удаляющий все записи
+		document.querySelector('#select_other_file').onclick = function(){
+			console.log('Сработал onclick Выбрать другой файл');	// for test
+			body = 'param_1='+'select_other_file';
+			// paramsForGET = url + '?param_1=del_all_posts';
+			ajaxGet(url,'POST',body,
+				function callback(arr_terms){
+				//--------пока черновик
 
 
-			//-------------------------------------------
+				//-------------------------------------------
 
 			}
 		);
 	}
+	//=======================================================
 
 
 	//По нажатию на кнопку 'Удалить все записи' запустить PHP скрипт удаляющий все записи
