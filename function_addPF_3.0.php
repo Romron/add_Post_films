@@ -206,6 +206,33 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 	 	return $str_lat;
 	}
 
+	function get_all_posts(){
+		/*
+			Получает все посты
+		*/
+
+		$arg = array(
+				'post_type' => 'any',
+				'posts_per_page' => -1
+				);
+		$arr_posts = get_posts($arg);
+		return $arr_posts;
+	}
+
+	function get_all_terms(){
+		$args = array(
+			'public'   => true,
+			'_builtin' => false
+		);
+		$output = 'names';
+		$list_taxonomys = get_taxonomies($args,$output);
+		$arr_terms = get_terms( $list_taxonomys, array("hide_empty" => false));
+		
+		return $arr_terms;
+	}
+
+
+
 	function del_all_posts(){
 		/*
 			удаляет все посты
@@ -221,19 +248,6 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 			$massage_del = wp_delete_post($post->ID,'true');
 		}
 		wp_reset_postdata();
-	}
-
-	function get_all_posts(){
-		/*
-			Получает все посты
-		*/
-
-		$arg = array(
-				'post_type' => 'any',
-				'posts_per_page' => -1
-				);
-		$arr_posts = get_posts($arg);
-		return $arr_posts;
 	}
 
 	function del_all_terms(){
@@ -256,8 +270,19 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		}
 	}
 
+	function del_all_img(){
+		
+		global $wpdb;
 
+		$wpdb = new wpdb( 'root', '', 'test-prostofilm-ml-local-host', '127.0.0.1:3306' );
+		if ( ! empty($wpdb->error) ) {
+			echo "Ошибка доступа к базе данных";
+			// wp_die($wpdb->error);
+		}
 
+		$str_SQL_query = 'DELETE FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+		$results = $wpdb->get_results($str_SQL_query);
+	}
 
 
 
@@ -267,18 +292,48 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 //============================================================================
 //		====================	РАЗРОБОТКА	==================================
 
-	function get_all_terms(){
-		$args = array(
-			'public'   => true,
-			'_builtin' => false
-		);
-		$output = 'names';
-		$list_taxonomys = get_taxonomies($args,$output);
-		$arr_terms = get_terms( $list_taxonomys, array("hide_empty" => false));
-		
-		return $arr_terms;
-	}
 
+	function get_all_img(){
+		global $wpdb;
+
+		$wpdb = new wpdb( 'root', '', 'test-prostofilm-ml-local-host', '127.0.0.1:3306' );
+		if ( ! empty($wpdb->error) ) {
+			// echo 'ERR messeng:<br><pre>'; print_r($wpdb->error); echo '</pre>';
+			wp_die($wpdb->error);
+		}
+
+		$str_SQL_query = 'SELECT * FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+		// $str_SQL_query = 'SELECT * FROM `wp_test_pf_postmeta` WHERE `meta_key` = "_wp_attachment_metadata"';
+		$arr_attachments = $wpdb->get_results($str_SQL_query);
+		
+		// unset($wpdb);
+
+		echo '<pre>'; print_r($arr_attachments); echo '</pre>';
+
+
+		// foreach ($arr_attachments as $attachment) {
+		// 	// echo '<pre>'; print_r($attachment->meta_value); echo '</pre>';
+		// 	$q = json_encode($attachment->meta_value);
+		// 	echo '<pre>'; print_r($q); echo '</pre>';
+		// }
+
+
+		// foreach ($arr_attachments as $attachment) {
+		// 	echo '<pre>'; print_r($attachment->ID); echo '</pre>'; // for tests
+			
+
+
+		// 	$src = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+		// 	echo '<pre>'; print_r($src); echo '</pre>'; // for tests
+		// 	// if ($src[1] == 150 and $src[2] == 150) {
+			
+		// 	// 	echo '<img src="' . $src[0] . '"><br>';
+
+		// 	// }else{continue;}
+		// }
+
+
+	}
 
 
 

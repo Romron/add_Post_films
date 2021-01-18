@@ -5,6 +5,8 @@ set_time_limit(0);
 
 //------------------	ЧИСТОВИК	----------------------------
 
+
+
 	switch ($_POST['param_1']) {
 		case 'butt_start':
 
@@ -15,6 +17,7 @@ set_time_limit(0);
 			
 			$arr_posts = get_all_posts();
 			$arr_terms = get_all_terms();
+			$arr_terms = get_all_img();
 			$arr_date[] = $arr_posts;
 			$arr_date[] = $arr_terms;
 
@@ -22,21 +25,20 @@ set_time_limit(0);
 			echo($json_arr_date);
 
 			break;
+
 		case 'butt_del_all_posts':
 			del_all_posts();
-			
 			break;
+
 		case 'butt_del_all_terms':
 			del_all_terms();
-			
-			break;		
-		case 'select_other_file':
-			// всё наполнение этого case для тестов
-			$arr_date = get_all_terms();
-			$json_arr_date = json_encode($arr_date,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
-			echo($json_arr_date);
-			
+			break;	
+
+		case 'butt_del_all_img':
+			echo("Получен  butt_del_all_img");
+			del_all_img();
 			break;
+
 		default:
 			# code...
 			break;
