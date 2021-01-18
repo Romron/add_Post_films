@@ -18,8 +18,8 @@
 			</div>
 			<button id="butt_start"><h3>СТАРТ</h3></button>
 		</div>
-		<div class="wrap wrap_0 wrap_1">
-			<h3>Текущее состояние сайта</h3>
+		<div class="wrap wrap_0 wrap_1">		<!-- Текущее состояние сайта -->
+			<h3>Текущее состояние сайта</h3>	<!-- Существующие записи -->
 			<div class='wrap_4'>
 				<h4>Существующие <br> записи</h4>
 				<div class='addPF current_state text_format' id="existing_post">
@@ -41,7 +41,7 @@
 					?>
 				</div>
 			</div>
-			<div class='wrap_4'>
+			<div class='wrap_4'>	<!-- Существующие таксономии -->
 				<h4>Существующие <br> таксономии</h4>
 				<div class='addPF current_state' id="existing_taxonomys">
 					<?php
@@ -70,7 +70,7 @@
 					?>
 				</div>
 			</div>
-			<div class='wrap_4'>
+			<div class='wrap_4'>	<!-- Существующие картинки -->
 				<h4>Существующие <br> картинки</h4>
 				<div class='addPF current_state' >
 					<?php
@@ -93,7 +93,7 @@
 		
 			<button class='but_1' id='del_all_posts'>Удалить все <br>записи</button>
 			<button class='but_1' id='del_all_terms'>Удалить все термины</button>
-			<button class='but_1'>Удалить все картинки</button>
+			<button class='but_1' id='del_all_img'> Удалить все картинки</button>
 		</div>
 		<div class="wrap wrap_0 wrap_1">	
 			<h3>Данные для импорта</h3>

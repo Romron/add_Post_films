@@ -230,6 +230,23 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		
 		return $arr_terms;
 	}	
+ 
+	function del_all_posts(){
+		/*
+			удаляет все посты
+		*/
+		$arg = array(
+			'post_type' => 'any',
+			'posts_per_page' => -1
+		);
+		$arr_posts = get_posts($arg);
+		foreach( $arr_posts as $post ){
+			// echo('Удxаляю запись с ID = '.$post->ID.'<br>');
+			setup_postdata( $post );
+			$massage_del = wp_delete_post($post->ID,'true');
+		}
+		wp_reset_postdata();
+	}
 
 	function del_all_terms(){
 		
@@ -251,27 +268,18 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		}
 	}
 
+	function del_all_img(){
+		
+		global $wpdb;
 
-//============================================================================
-//		====================	РАЗРОБОТКА	==================================
-
-
-	function del_all_posts(){
-		/*
-			удаляет все посты
-		*/
-		$arg = array(
-			'post_type' => 'any',
-			'posts_per_page' => -1
-		);
-		$arr_posts = get_posts($arg);
-
-		foreach( $arr_posts as $post ){
-			// echo('Удxаляю запись с ID = '.$post->ID.'<br>');
-			setup_postdata( $post );
-			$massage_del = wp_delete_post($post->ID,'true');
+		$wpdb = new wpdb( 'root', '', 'test-prostofilm-ml-local-host', '127.0.0.1:3306' );
+		if ( ! empty($wpdb->error) ) {
+			echo "Ошибка доступа к базе данных";
+			// wp_die($wpdb->error);
 		}
-		wp_reset_postdata();
+
+		$str_SQL_query = 'DELETE FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+		$results = $wpdb->get_results($str_SQL_query);
 	}
 
 
@@ -279,9 +287,34 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 
 
 
+function get_all_img(){
+	global $wpdb;
+
+	//Устанавливаем доступы к базе данных:
+		$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+		$user = 'root'; //имя пользователя, по умолчанию это root
+		$password = ''; //пароль, по умолчанию пустой
+		$db_name = 'prostofilm'; //имя базы данных
+
+	//Соединяемся с базой данных используя наши доступы:
+	$sql_link = new mysqli($host, $user, $password, $db_name);
+
+	$str_query = 'SELECT * FROM `wp_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+	// $str_query = 'SELECT * FROM `wp_pf_posts`';
+
+	$result = $sql_link -> query($str_query);
+
+	while ($arr_row = $result->fetch_assoc()) {
+		$src = wp_get_attachment_image_src( $arr_row['ID'], 'thumbnail' );
+		if ($src[1] == 150 and $src[2] == 150) {
+			echo '<img src="' . $src[0] . '"><br>';
+		}else{ continue; }
+	    
+	}
 
 
-
+	$sql_link -> mysql_close($sql_link);
+}
 
 
 
