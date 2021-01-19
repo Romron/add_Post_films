@@ -312,7 +312,8 @@ function get_all_img(){
 	//Соединя.cm с базой данных используя полученные данные:
 	$sql_link = new mysqli($host, $user, $password, $db_name);
 
-	$str_query = 'SELECT * FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+	// $str_query = 'SELECT * FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+	$str_query = 'SELECT * FROM `wp_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
 	$result = $sql_link -> query($str_query);
 	$arr_imgs = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
