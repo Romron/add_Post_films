@@ -329,6 +329,58 @@ function get_all_img(){
 	return $arr_result;
 }
 
+function get_name_table_BD(){
+	/*
+		получаю имя таблицы posts произвольной базы данных
+	*/
+
+	// $conect = conect_to_BD();
+	$sql_link = conect_to_BD()[0];
+	$db_name = conect_to_BD()[1];
+
+	$str_query = '	
+				SELECT table_name
+				FROM information_schema.columns
+				where `TABLE_SCHEMA` = "'.$db_name.'" 
+				AND column_name = "post_author"
+				';
+	$result = $sql_link -> query($str_query);
+	if (!$result) {
+		printf("Errormessage: %s\n", mysqli_error($sql_link));
+		exit();
+	}
+
+	$arr_tables = mysqli_fetch_all($result,MYSQLI_ASSOC);
+	echo '<pre>'; print_r($arr_tables[0][table_name]); echo '</pre>';
+
+	return $arr_tables[0][table_name];
+}
+
+
+function conect_to_BD(){
+	/*
+		для подключения на разных компах 
+	*/
+
+	//Устанавлива. доступы к базе данных:
+		if (getenv('USERNAME') == 'Berehulenko') {
+			// Работа:
+			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+			$user = 'root'; //имя пользователя, по умолчанию это root
+			$password = ''; //пароль, по умолчанию пустой
+			$db_name = 'test-prostofilm-ml-local-host'; //имя базы данных
+		} else {
+			// ДОМ:
+			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+			$user = 'root'; //имя пользователя, по умолчанию это root
+			$password = ''; //пароль, по умолчанию пустой
+			$db_name = 'prostofilm'; //имя базы данных
+		}
+	
+	//Соединяюсь с базой данных используя полученные данные:
+	$sql_link = new mysqli($host, $user, $password, $db_name);
+	return array($sql_link,$db_name);
+}
 
 
 

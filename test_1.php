@@ -16,8 +16,7 @@ require_once("function_addPF_3.0.php");
 set_time_limit(0);
 // require($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 
-
-
+get_name_table_BD();
 
 
 
