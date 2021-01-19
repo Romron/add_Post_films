@@ -15,8 +15,12 @@ window.onload = function(){
 		body = 'param_1='+'butt_del_all_img';
 		// paramsForGET = url + '?param_1=del_all_posts';
 		ajaxGet(url,'POST',body);
+		// удалить картинки с экрана
+			let arr_existing_img = document.querySelector('#existing_img').childNodes;
+			for (var v = arr_existing_img.length - 1; v >= 0; v--) {
+				arr_existing_img[v].remove();	// удаляет узел DOM
+			}
 	}
-	//=======================================================
 
 	//По нажатию на кнопку 'Удалить все записи' запустить PHP скрипт удаляющий все записи
 	document.querySelector('#del_all_posts').onclick = function(){
@@ -175,9 +179,16 @@ window.onload = function(){
 
 					}
 
-				// вывожу добавленные картинки
-					
-
+				// вывожу на экран добавленные картинки
+					let teg_img;
+					let div_existing_img = document.querySelector('#existing_img');
+					for (var i = arr_date[2].length - 1 ; i >= 0; i--) {
+						// strForTegIMG = '<img src="'+arr_date[2][i]+'" alt="">'
+						teg_img = document.createElement('img');
+						teg_img.setAttribute('src',arr_date[2][i])
+						// teg_img.innerHTML = strForTegIMG;
+						div_existing_img.append(teg_img);
+					}
 			}
 		);
 	}

@@ -72,7 +72,7 @@
 			</div>
 			<div class='wrap_4'>	<!-- Существующие картинки -->
 				<h4>Существующие <br> картинки</h4>
-				<div class='addPF current_state' >
+				<div class='addPF current_state' id="existing_img">
 					<?php
 
 						foreach ($arr_posts as $post) {
@@ -80,9 +80,7 @@
 							foreach ($arr_attachments as $attachment) {
 								$src = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
 								if ($src[1] == 150 and $src[2] == 150) {
-					?>			
-									<img src="<?php echo($src[0]);?>" alt=""><br>
-					<?php		
+					?><img src="<?php echo($src[0]);?>" alt=""><?php		
 								}else{continue;}
 							}
 						}

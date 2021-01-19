@@ -285,35 +285,47 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 
 
 
-
+//============================================================================
+//		====================	РАЗРОБОТКА	==================================
 
 function get_all_img(){
 	global $wpdb;
 
-	//Устанавливаем доступы к базе данных:
-		$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
-		$user = 'root'; //имя пользователя, по умолчанию это root
-		$password = ''; //пароль, по умолчанию пустой
-		$db_name = 'prostofilm'; //имя базы данных
+	$arr_img = [];
+	$arr_result = [];
 
-	//Соединяемся с базой данных используя наши доступы:
+	//Устанавлива. доступы к базе данных:
+		if (getenv('USERNAME') == 'Berehulenko') {
+			// Работа:
+			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+			$user = 'root'; //имя пользователя, по умолчанию это root
+			$password = ''; //пароль, по умолчанию пустой
+			$db_name = 'test-prostofilm-ml-local-host'; //имя базы данных
+		} else {
+			// ДОМ:
+			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+			$user = 'root'; //имя пользователя, по умолчанию это root
+			$password = ''; //пароль, по умолчанию пустой
+			$db_name = 'prostofilm'; //имя базы данных
+		}
+	
+	//Соединя.cm с базой данных используя полученные данные:
 	$sql_link = new mysqli($host, $user, $password, $db_name);
 
-	$str_query = 'SELECT * FROM `wp_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
-	// $str_query = 'SELECT * FROM `wp_pf_posts`';
-
+	$str_query = 'SELECT * FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
 	$result = $sql_link -> query($str_query);
+	$arr_imgs = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
-	while ($arr_row = $result->fetch_assoc()) {
-		$src = wp_get_attachment_image_src( $arr_row['ID'], 'thumbnail' );
+	foreach ($arr_imgs as $img) {
+		$src = wp_get_attachment_image_src( $img['ID'], 'thumbnail' );
 		if ($src[1] == 150 and $src[2] == 150) {
-			echo '<img src="' . $src[0] . '"><br>';
-		}else{ continue; }
-	    
+			$arr_result[] = $src[0];
+		}
+		// echo '<pre>'; print_r($arr_result); echo '</pre>';
 	}
 
-
-	$sql_link -> mysql_close($sql_link);
+	$sql_link -> close();
+	return $arr_result;
 }
 
 
