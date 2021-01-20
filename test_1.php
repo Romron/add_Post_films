@@ -16,8 +16,11 @@ require_once("function_addPF_3.0.php");
 set_time_limit(0);
 // require($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 
-get_name_table_BD();
+$sql_link = conect_to_BD()[0];
+echo '<pre>'; print_r($sql_link); echo '</pre>';
 
+$name_table_posts = get_name_table_posts_BD();
+echo '<pre>'; print_r($name_table_posts); echo '</pre>';
 
 
 

@@ -82,12 +82,14 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 			for ($n_poster=0; $n_poster < 6; $n_poster++) { 
 				$name_img_file = $arr_date_film['Id_kinopisk'].'_'.$n_poster.'.jpeg';
 				if ( !insert_IMG_in_post($name_img_file, $post_id) ){
-					// echo('Постер   '.$name_img_file.'  для  '.$arr_date_film['Title'].'<font size="3" color="red" >   существует, но добавить его к посту не удалось!! </font><br>');
 					continue;
 				}
 			}
 
 			add_new_taxonomy_item($arr_date_film,$post_id);  // только что созданный пост прикрепляю к таксономиям
+
+			
+			
 		}
 	}
 
@@ -230,7 +232,88 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		
 		return $arr_terms;
 	}	
- 
+
+	function get_all_img(){
+		global $wpdb;
+
+		$arr_img = [];
+		$arr_result = [];
+
+		conect_to_BD();
+		$sql_link = conect_to_BD()[0];
+		$name_table_posts = get_name_table_posts_BD();
+
+		// $str_query = 'SELECT * FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
+		$str_query = '
+			SELECT * FROM `'.$name_table_posts.'` 
+			WHERE `post_type`= "attachment" 
+			AND `post_mime_type` = "image/jpeg"';
+
+		$result = $sql_link -> query($str_query);
+		$arr_imgs = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+		foreach ($arr_imgs as $img) {
+			$src = wp_get_attachment_image_src( $img['ID'], 'thumbnail' );
+			if ($src[1] == 150 and $src[2] == 150) {
+				$arr_result[] = $src[0];
+			}
+			// echo '<pre>'; print_r($arr_result); echo '</pre>';
+		}
+
+		$sql_link -> close();
+		return $arr_result;
+	}
+
+	function get_name_table_posts_BD(){
+		/*
+			получаю имя таблицы posts произвольной базы данных
+		*/
+
+		$sql_link = conect_to_BD()[0];
+		$db_name = conect_to_BD()[1];
+
+		$str_query = '	
+					SELECT table_name
+					FROM information_schema.columns
+					where `TABLE_SCHEMA` = "'.$db_name.'" 
+					AND column_name = "post_author"
+					';
+		$result = $sql_link -> query($str_query);
+		if (!$result) {
+			printf("Errormessage: %s\n", mysqli_error($sql_link));
+			exit();
+		}
+
+		$arr_tables = mysqli_fetch_all($result,MYSQLI_ASSOC);
+
+		return $arr_tables[0]['table_name'];
+	}
+
+	function conect_to_BD(){
+		/*
+			для подключения на разных компах 
+		*/
+
+		//Устанавлива. доступы к базе данных:
+			if (getenv('USERNAME') == 'Berehulenko') {
+				// Работа:
+				$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+				$user = 'root'; //имя пользователя, по умолчанию это root
+				$password = ''; //пароль, по умолчанию пустой
+				$db_name = 'test-prostofilm-ml-local-host'; //имя базы данных
+			} else {
+				// ДОМ:
+				$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
+				$user = 'root'; //имя пользователя, по умолчанию это root
+				$password = ''; //пароль, по умолчанию пустой
+				$db_name = 'prostofilm'; //имя базы данных
+			}
+		
+		//Соединяюсь с базой данных используя полученные данные:
+		$sql_link = new mysqli($host, $user, $password, $db_name);
+		return array($sql_link,$db_name);
+	}
+
 	function del_all_posts(){
 		/*
 			удаляет все посты
@@ -282,105 +365,13 @@ if ( ! function_exists( 'wp_crop_image' ) ) {		// возникала ошибк�
 		$results = $wpdb->get_results($str_SQL_query);
 	}
 
-
-
-
 //============================================================================
 //		====================	РАЗРОБОТКА	==================================
 
-function get_all_img(){
-	global $wpdb;
-
-	$arr_img = [];
-	$arr_result = [];
-
-	//Устанавлива. доступы к базе данных:
-		if (getenv('USERNAME') == 'Berehulenko') {
-			// Работа:
-			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
-			$user = 'root'; //имя пользователя, по умолчанию это root
-			$password = ''; //пароль, по умолчанию пустой
-			$db_name = 'test-prostofilm-ml-local-host'; //имя базы данных
-		} else {
-			// ДОМ:
-			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
-			$user = 'root'; //имя пользователя, по умолчанию это root
-			$password = ''; //пароль, по умолчанию пустой
-			$db_name = 'prostofilm'; //имя базы данных
-		}
-	
-	//Соединя.cm с базой данных используя полученные данные:
-	$sql_link = new mysqli($host, $user, $password, $db_name);
-
-	// $str_query = 'SELECT * FROM `wp_test_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
-	$str_query = 'SELECT * FROM `wp_pf_posts` WHERE `post_type`= "attachment" AND `post_mime_type` = "image/jpeg"';
-	$result = $sql_link -> query($str_query);
-	$arr_imgs = mysqli_fetch_all($result,MYSQLI_ASSOC);
-
-	foreach ($arr_imgs as $img) {
-		$src = wp_get_attachment_image_src( $img['ID'], 'thumbnail' );
-		if ($src[1] == 150 and $src[2] == 150) {
-			$arr_result[] = $src[0];
-		}
-		// echo '<pre>'; print_r($arr_result); echo '</pre>';
-	}
-
-	$sql_link -> close();
-	return $arr_result;
-}
-
-function get_name_table_BD(){
-	/*
-		получаю имя таблицы posts произвольной базы данных
-	*/
-
-	// $conect = conect_to_BD();
-	$sql_link = conect_to_BD()[0];
-	$db_name = conect_to_BD()[1];
-
-	$str_query = '	
-				SELECT table_name
-				FROM information_schema.columns
-				where `TABLE_SCHEMA` = "'.$db_name.'" 
-				AND column_name = "post_author"
-				';
-	$result = $sql_link -> query($str_query);
-	if (!$result) {
-		printf("Errormessage: %s\n", mysqli_error($sql_link));
-		exit();
-	}
-
-	$arr_tables = mysqli_fetch_all($result,MYSQLI_ASSOC);
-	echo '<pre>'; print_r($arr_tables[0][table_name]); echo '</pre>';
-
-	return $arr_tables[0][table_name];
-}
 
 
-function conect_to_BD(){
-	/*
-		для подключения на разных компах 
-	*/
 
-	//Устанавлива. доступы к базе данных:
-		if (getenv('USERNAME') == 'Berehulenko') {
-			// Работа:
-			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
-			$user = 'root'; //имя пользователя, по умолчанию это root
-			$password = ''; //пароль, по умолчанию пустой
-			$db_name = 'test-prostofilm-ml-local-host'; //имя базы данных
-		} else {
-			// ДОМ:
-			$host = '127.0.0.1:3306'; //имя хоста, на локальном компьютере это localhost
-			$user = 'root'; //имя пользователя, по умолчанию это root
-			$password = ''; //пароль, по умолчанию пустой
-			$db_name = 'prostofilm'; //имя базы данных
-		}
-	
-	//Соединяюсь с базой данных используя полученные данные:
-	$sql_link = new mysqli($host, $user, $password, $db_name);
-	return array($sql_link,$db_name);
-}
+
 
 
 
